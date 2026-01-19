@@ -42,10 +42,20 @@ trap_entry:
     /* 弹出 vector 号 (4字节) */
     addl $4, %esp 
 
-     /* 弹出 err 号 (4字节) */
+    /* 弹出 err 号 (4字节) */
     addl $4, %esp
 
-    /* ---------- 返回 ---------- */
+    /* ---------- 判断返回到用户态还是内核态 ---------- */
+    /* iret 会根据栈上 CS 的 ring 位自动决定是否弹出 SS/ESP */
+    testl $3, 4(%esp)  /* 检查 CS 的低2位是否为3 (用户态) */
+    jnz user_return
+
+kernel_return:
+    /* 返回到内核态 */
+    ret
+
+user_return:
+    /* 返回到用户态 */
     iret
 
 
@@ -59,7 +69,6 @@ trap_entry_\vec:
     #pushl $trap_entry
     #ret
     .endm
-
 
     .section .text
     .code32

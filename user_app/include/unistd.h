@@ -4,5 +4,6 @@
 #include "stddef.h"
 
 ssize_t write(int fd, const void *buf, size_t count);
+void *sbrk(intptr_t increment);
 
 #endif

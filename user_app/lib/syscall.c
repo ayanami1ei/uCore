@@ -11,3 +11,8 @@ void exit(int code)
 {
     syscall(SYS_exit, code);
 }
+
+void *sbrk(intptr_t increment)
+{
+    return (void *)syscall(SYS_sbrk, increment);
+}

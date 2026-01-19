@@ -91,12 +91,12 @@ static int print_unsigned(unsigned long value, int base, int uppercase)
     put_char(c);
   10006f:	83 ec 0c             	sub    $0xc,%esp
   100072:	6a 30                	push   $0x30
-  100074:	e8 06 0c 00 00       	call   100c7f <put_char>
-}
+  100074:	e8 40 0c 00 00       	call   100cb9 <put_char>
+    return;
   100079:	83 c4 10             	add    $0x10,%esp
         return 1;
   10007c:	b8 01 00 00 00       	mov    $0x1,%eax
-}
+    return;
   100081:	eb 28                	jmp    1000ab <print_unsigned+0x92>
     while (i-- > 0)
   100083:	8b 5d c0             	mov    -0x40(%ebp),%ebx
@@ -107,7 +107,7 @@ static int print_unsigned(unsigned long value, int base, int uppercase)
   10008c:	83 ec 0c             	sub    $0xc,%esp
   10008f:	0f be 44 2b c8       	movsbl -0x38(%ebx,%ebp,1),%eax
   100094:	50                   	push   %eax
-  100095:	e8 e5 0b 00 00       	call   100c7f <put_char>
+  100095:	e8 1f 0c 00 00       	call   100cb9 <put_char>
     while (i-- > 0)
   10009a:	89 d8                	mov    %ebx,%eax
   10009c:	4b                   	dec    %ebx
@@ -200,7 +200,7 @@ int vprintf(const char *fmt, va_list ap)
   10011a:	80 f9 20             	cmp    $0x20,%cl
   10011d:	77 0a                	ja     100129 <vprintf+0x68>
   10011f:	0f b6 c1             	movzbl %cl,%eax
-  100122:	ff 24 85 88 20 10 00 	jmp    *0x102088(,%eax,4)
+  100122:	ff 24 85 30 20 10 00 	jmp    *0x102030(,%eax,4)
     while (*s)
   100129:	8b 55 e4             	mov    -0x1c(%ebp),%edx
   10012c:	89 d3                	mov    %edx,%ebx
@@ -211,7 +211,7 @@ int vprintf(const char *fmt, va_list ap)
   100137:	83 ec 0c             	sub    $0xc,%esp
   10013a:	0f be c0             	movsbl %al,%eax
   10013d:	50                   	push   %eax
-  10013e:	e8 3c 0b 00 00       	call   100c7f <put_char>
+  10013e:	e8 76 0b 00 00       	call   100cb9 <put_char>
             (*count)++;
   100143:	43                   	inc    %ebx
     while (*s)
@@ -260,7 +260,7 @@ int vprintf(const char *fmt, va_list ap)
     put_char(c);
   1001a1:	83 ec 0c             	sub    $0xc,%esp
   1001a4:	6a 2d                	push   $0x2d
-  1001a6:	e8 d4 0a 00 00       	call   100c7f <put_char>
+  1001a6:	e8 0e 0b 00 00       	call   100cb9 <put_char>
         u = (unsigned long long)(-value);
   1001ab:	89 d8                	mov    %ebx,%eax
   1001ad:	89 f2                	mov    %esi,%edx
@@ -308,7 +308,7 @@ int vprintf(const char *fmt, va_list ap)
     put_char(c);
   10020a:	83 ec 0c             	sub    $0xc,%esp
   10020d:	6a 2d                	push   $0x2d
-  10020f:	e8 6b 0a 00 00       	call   100c7f <put_char>
+  10020f:	e8 a5 0a 00 00       	call   100cb9 <put_char>
         u = (unsigned long long)(-value);
   100214:	8b 45 d8             	mov    -0x28(%ebp),%eax
   100217:	8b 55 dc             	mov    -0x24(%ebp),%edx
@@ -438,9 +438,9 @@ int vprintf(const char *fmt, va_list ap)
     put_char(c);
   100315:	83 ec 0c             	sub    $0xc,%esp
   100318:	6a 30                	push   $0x30
-  10031a:	e8 60 09 00 00       	call   100c7f <put_char>
+  10031a:	e8 9a 09 00 00       	call   100cb9 <put_char>
   10031f:	c7 04 24 78 00 00 00 	movl   $0x78,(%esp)
-  100326:	e8 54 09 00 00       	call   100c7f <put_char>
+  100326:	e8 8e 09 00 00       	call   100cb9 <put_char>
     count += print_unsigned((unsigned long long)(uintptr_t)ptr, 16, 0);
   10032b:	b9 00 00 00 00       	mov    $0x0,%ecx
   100330:	ba 10 00 00 00       	mov    $0x10,%edx
@@ -466,7 +466,7 @@ int vprintf(const char *fmt, va_list ap)
   100362:	83 ec 0c             	sub    $0xc,%esp
   100365:	0f be c0             	movsbl %al,%eax
   100368:	50                   	push   %eax
-  100369:	e8 11 09 00 00       	call   100c7f <put_char>
+  100369:	e8 4b 09 00 00       	call   100cb9 <put_char>
             count++;
   10036e:	ff 45 e4             	incl   -0x1c(%ebp)
             continue;
@@ -483,7 +483,7 @@ int vprintf(const char *fmt, va_list ap)
   10037e:	83 ec 0c             	sub    $0xc,%esp
   100381:	0f be 00             	movsbl (%eax),%eax
   100384:	50                   	push   %eax
-  100385:	e8 f5 08 00 00       	call   100c7f <put_char>
+  100385:	e8 2f 09 00 00       	call   100cb9 <put_char>
             kputc((char)c);
             count++;
   10038a:	ff 45 e4             	incl   -0x1c(%ebp)
@@ -516,7 +516,7 @@ int vprintf(const char *fmt, va_list ap)
   1003b4:	83 ec 0c             	sub    $0xc,%esp
   1003b7:	0f be c0             	movsbl %al,%eax
   1003ba:	50                   	push   %eax
-  1003bb:	e8 bf 08 00 00       	call   100c7f <put_char>
+  1003bb:	e8 f9 08 00 00       	call   100cb9 <put_char>
             (*count)++;
   1003c0:	43                   	inc    %ebx
     while (*s)
@@ -537,7 +537,7 @@ int vprintf(const char *fmt, va_list ap)
     put_char(c);
   1003e2:	83 ec 0c             	sub    $0xc,%esp
   1003e5:	6a 25                	push   $0x25
-  1003e7:	e8 93 08 00 00       	call   100c7f <put_char>
+  1003e7:	e8 cd 08 00 00       	call   100cb9 <put_char>
             kputs(s, &count);
             break;
         }
@@ -577,7 +577,7 @@ int vprintf(const char *fmt, va_list ap)
   100421:	0f 87 02 fd ff ff    	ja     100129 <vprintf+0x68>
   100427:	0f 87 fc fc ff ff    	ja     100129 <vprintf+0x68>
   10042d:	0f b6 c2             	movzbl %dl,%eax
-  100430:	ff 24 85 0c 21 10 00 	jmp    *0x10210c(,%eax,4)
+  100430:	ff 24 85 b4 20 10 00 	jmp    *0x1020b4(,%eax,4)
 
 00100437 <printf>:
 
@@ -623,28 +623,28 @@ int main()
   10045b:	51                   	push   %ecx
   10045c:	83 ec 04             	sub    $0x4,%esp
    gdt_install();
-  10045f:	e8 71 03 00 00       	call   1007d5 <gdt_install>
+  10045f:	e8 82 03 00 00       	call   1007e6 <gdt_install>
    trap_init();
-  100464:	e8 ea 0b 00 00       	call   101053 <trap_init>
+  100464:	e8 4d 0c 00 00       	call   1010b6 <trap_init>
    page_init();
-  100469:	e8 cc 04 00 00       	call   10093a <page_init>
+  100469:	e8 dd 04 00 00       	call   10094b <page_init>
 
    printf("Welcome to uCore!\n");
   10046e:	83 ec 0c             	sub    $0xc,%esp
-  100471:	68 2d 20 10 00       	push   $0x10202d
+  100471:	68 38 21 10 00       	push   $0x102138
   100476:	e8 bc ff ff ff       	call   100437 <printf>
 
    printf("Starting user app...\n");
-  10047b:	c7 04 24 40 20 10 00 	movl   $0x102040,(%esp)
+  10047b:	c7 04 24 4b 21 10 00 	movl   $0x10214b,(%esp)
   100482:	e8 b0 ff ff ff       	call   100437 <printf>
    user_app_run();
-  100487:	e8 80 0c 00 00       	call   10110c <user_app_run>
+  100487:	e8 1a 0d 00 00       	call   1011a6 <user_app_run>
    printf("User app finished\n");
-  10048c:	c7 04 24 56 20 10 00 	movl   $0x102056,(%esp)
+  10048c:	c7 04 24 61 21 10 00 	movl   $0x102161,(%esp)
   100493:	e8 9f ff ff ff       	call   100437 <printf>
 
    shutdown();
-  100498:	e8 34 08 00 00       	call   100cd1 <shutdown>
+  100498:	e8 6e 08 00 00       	call   100d0b <shutdown>
 
    return 0;
 }
@@ -1012,7 +1012,7 @@ void dummy(int _, ...)
     pushl %esp                  /* struct trapframe* */
   100647:	54                   	push   %esp
     call trap_handler
-  100648:	e8 14 0a 00 00       	call   101061 <trap_handler>
+  100648:	e8 77 0a 00 00       	call   1010c4 <trap_handler>
     addl $4, %esp
   10064d:	83 c4 04             	add    $0x4,%esp
 
@@ -1032,1488 +1032,1601 @@ void dummy(int _, ...)
     addl $4, %esp 
   100657:	83 c4 04             	add    $0x4,%esp
 
-     /* 弹出 err 号 (4字节) */
+    /* 弹出 err 号 (4字节) */
     addl $4, %esp
   10065a:	83 c4 04             	add    $0x4,%esp
 
-    /* ---------- 返回 ---------- */
-    iret
-  10065d:	cf                   	iret
+    /* ---------- 判断返回到用户态还是内核态 ---------- */
+    /* iret 会根据栈上 CS 的 ring 位自动决定是否弹出 SS/ESP */
+    testl $3, 4(%esp)  /* 检查 CS 的低2位是否为3 (用户态) */
+  10065d:	f7 44 24 04 03 00 00 	testl  $0x3,0x4(%esp)
+  100664:	00 
+    jnz user_return
+  100665:	75 01                	jne    100668 <user_return>
 
-0010065e <trap_entry_0>:
+00100667 <kernel_return>:
+
+kernel_return:
+    /* 返回到内核态 */
+    ret
+  100667:	c3                   	ret
+
+00100668 <user_return>:
+
+user_return:
+    /* 返回到用户态 */
+    iret
+  100668:	cf                   	iret
+
+00100669 <trap_entry_0>:
     #ret
     .endm
 
     # 生成 syscall 向量 0x80 的 stub
     .if 1
     TRAP_STUB 0
-  10065e:	6a 00                	push   $0x0
-  100660:	6a 00                	push   $0x0
-  100662:	eb d0                	jmp    100634 <trap_entry>
+  100669:	6a 00                	push   $0x0
+  10066b:	6a 00                	push   $0x0
+  10066d:	eb c5                	jmp    100634 <trap_entry>
 
-00100664 <trap_entry_1>:
+0010066f <trap_entry_1>:
     TRAP_STUB 1
-  100664:	6a 00                	push   $0x0
-  100666:	6a 01                	push   $0x1
-  100668:	eb ca                	jmp    100634 <trap_entry>
+  10066f:	6a 00                	push   $0x0
+  100671:	6a 01                	push   $0x1
+  100673:	eb bf                	jmp    100634 <trap_entry>
 
-0010066a <trap_entry_2>:
+00100675 <trap_entry_2>:
     TRAP_STUB 2
-  10066a:	6a 00                	push   $0x0
-  10066c:	6a 02                	push   $0x2
-  10066e:	eb c4                	jmp    100634 <trap_entry>
+  100675:	6a 00                	push   $0x0
+  100677:	6a 02                	push   $0x2
+  100679:	eb b9                	jmp    100634 <trap_entry>
 
-00100670 <trap_entry_3>:
+0010067b <trap_entry_3>:
     TRAP_STUB 3
-  100670:	6a 00                	push   $0x0
-  100672:	6a 03                	push   $0x3
-  100674:	eb be                	jmp    100634 <trap_entry>
+  10067b:	6a 00                	push   $0x0
+  10067d:	6a 03                	push   $0x3
+  10067f:	eb b3                	jmp    100634 <trap_entry>
 
-00100676 <trap_entry_4>:
+00100681 <trap_entry_4>:
     TRAP_STUB 4
-  100676:	6a 00                	push   $0x0
-  100678:	6a 04                	push   $0x4
-  10067a:	eb b8                	jmp    100634 <trap_entry>
+  100681:	6a 00                	push   $0x0
+  100683:	6a 04                	push   $0x4
+  100685:	eb ad                	jmp    100634 <trap_entry>
 
-0010067c <trap_entry_5>:
+00100687 <trap_entry_5>:
     TRAP_STUB 5
-  10067c:	6a 00                	push   $0x0
-  10067e:	6a 05                	push   $0x5
-  100680:	eb b2                	jmp    100634 <trap_entry>
+  100687:	6a 00                	push   $0x0
+  100689:	6a 05                	push   $0x5
+  10068b:	eb a7                	jmp    100634 <trap_entry>
 
-00100682 <trap_entry_6>:
+0010068d <trap_entry_6>:
     TRAP_STUB 6
-  100682:	6a 00                	push   $0x0
-  100684:	6a 06                	push   $0x6
-  100686:	eb ac                	jmp    100634 <trap_entry>
+  10068d:	6a 00                	push   $0x0
+  10068f:	6a 06                	push   $0x6
+  100691:	eb a1                	jmp    100634 <trap_entry>
 
-00100688 <trap_entry_7>:
+00100693 <trap_entry_7>:
     TRAP_STUB 7
-  100688:	6a 00                	push   $0x0
-  10068a:	6a 07                	push   $0x7
-  10068c:	eb a6                	jmp    100634 <trap_entry>
+  100693:	6a 00                	push   $0x0
+  100695:	6a 07                	push   $0x7
+  100697:	eb 9b                	jmp    100634 <trap_entry>
 
-0010068e <trap_entry_8>:
+00100699 <trap_entry_8>:
     TRAP_STUB 8
-  10068e:	6a 00                	push   $0x0
-  100690:	6a 08                	push   $0x8
-  100692:	eb a0                	jmp    100634 <trap_entry>
+  100699:	6a 00                	push   $0x0
+  10069b:	6a 08                	push   $0x8
+  10069d:	eb 95                	jmp    100634 <trap_entry>
 
-00100694 <trap_entry_9>:
+0010069f <trap_entry_9>:
     TRAP_STUB 9
-  100694:	6a 00                	push   $0x0
-  100696:	6a 09                	push   $0x9
-  100698:	eb 9a                	jmp    100634 <trap_entry>
+  10069f:	6a 00                	push   $0x0
+  1006a1:	6a 09                	push   $0x9
+  1006a3:	eb 8f                	jmp    100634 <trap_entry>
 
-0010069a <trap_entry_10>:
+001006a5 <trap_entry_10>:
     TRAP_STUB 10
-  10069a:	6a 00                	push   $0x0
-  10069c:	6a 0a                	push   $0xa
-  10069e:	eb 94                	jmp    100634 <trap_entry>
+  1006a5:	6a 00                	push   $0x0
+  1006a7:	6a 0a                	push   $0xa
+  1006a9:	eb 89                	jmp    100634 <trap_entry>
 
-001006a0 <trap_entry_11>:
+001006ab <trap_entry_11>:
     TRAP_STUB 11
-  1006a0:	6a 00                	push   $0x0
-  1006a2:	6a 0b                	push   $0xb
-  1006a4:	eb 8e                	jmp    100634 <trap_entry>
+  1006ab:	6a 00                	push   $0x0
+  1006ad:	6a 0b                	push   $0xb
+  1006af:	eb 83                	jmp    100634 <trap_entry>
 
-001006a6 <trap_entry_12>:
+001006b1 <trap_entry_12>:
     TRAP_STUB 12
-  1006a6:	6a 00                	push   $0x0
-  1006a8:	6a 0c                	push   $0xc
-  1006aa:	eb 88                	jmp    100634 <trap_entry>
+  1006b1:	6a 00                	push   $0x0
+  1006b3:	6a 0c                	push   $0xc
+  1006b5:	e9 7a ff ff ff       	jmp    100634 <trap_entry>
 
-001006ac <trap_entry_13>:
+001006ba <trap_entry_13>:
     TRAP_STUB 13
-  1006ac:	6a 00                	push   $0x0
-  1006ae:	6a 0d                	push   $0xd
-  1006b0:	eb 82                	jmp    100634 <trap_entry>
+  1006ba:	6a 00                	push   $0x0
+  1006bc:	6a 0d                	push   $0xd
+  1006be:	e9 71 ff ff ff       	jmp    100634 <trap_entry>
 
-001006b2 <trap_entry_14>:
+001006c3 <trap_entry_14>:
     TRAP_STUB_err 14
-  1006b2:	6a 0e                	push   $0xe
-  1006b4:	e9 7b ff ff ff       	jmp    100634 <trap_entry>
+  1006c3:	6a 0e                	push   $0xe
+  1006c5:	e9 6a ff ff ff       	jmp    100634 <trap_entry>
 
-001006b9 <trap_entry_15>:
+001006ca <trap_entry_15>:
     TRAP_STUB 15
-  1006b9:	6a 00                	push   $0x0
-  1006bb:	6a 0f                	push   $0xf
-  1006bd:	e9 72 ff ff ff       	jmp    100634 <trap_entry>
+  1006ca:	6a 00                	push   $0x0
+  1006cc:	6a 0f                	push   $0xf
+  1006ce:	e9 61 ff ff ff       	jmp    100634 <trap_entry>
 
-001006c2 <trap_entry_16>:
+001006d3 <trap_entry_16>:
     TRAP_STUB 16
-  1006c2:	6a 00                	push   $0x0
-  1006c4:	6a 10                	push   $0x10
-  1006c6:	e9 69 ff ff ff       	jmp    100634 <trap_entry>
+  1006d3:	6a 00                	push   $0x0
+  1006d5:	6a 10                	push   $0x10
+  1006d7:	e9 58 ff ff ff       	jmp    100634 <trap_entry>
 
-001006cb <trap_entry_17>:
+001006dc <trap_entry_17>:
     TRAP_STUB 17
-  1006cb:	6a 00                	push   $0x0
-  1006cd:	6a 11                	push   $0x11
-  1006cf:	e9 60 ff ff ff       	jmp    100634 <trap_entry>
+  1006dc:	6a 00                	push   $0x0
+  1006de:	6a 11                	push   $0x11
+  1006e0:	e9 4f ff ff ff       	jmp    100634 <trap_entry>
 
-001006d4 <trap_entry_18>:
+001006e5 <trap_entry_18>:
     TRAP_STUB 18
-  1006d4:	6a 00                	push   $0x0
-  1006d6:	6a 12                	push   $0x12
-  1006d8:	e9 57 ff ff ff       	jmp    100634 <trap_entry>
+  1006e5:	6a 00                	push   $0x0
+  1006e7:	6a 12                	push   $0x12
+  1006e9:	e9 46 ff ff ff       	jmp    100634 <trap_entry>
 
-001006dd <trap_entry_19>:
+001006ee <trap_entry_19>:
     TRAP_STUB 19
-  1006dd:	6a 00                	push   $0x0
-  1006df:	6a 13                	push   $0x13
-  1006e1:	e9 4e ff ff ff       	jmp    100634 <trap_entry>
+  1006ee:	6a 00                	push   $0x0
+  1006f0:	6a 13                	push   $0x13
+  1006f2:	e9 3d ff ff ff       	jmp    100634 <trap_entry>
 
-001006e6 <trap_entry_20>:
+001006f7 <trap_entry_20>:
     TRAP_STUB 20
-  1006e6:	6a 00                	push   $0x0
-  1006e8:	6a 14                	push   $0x14
-  1006ea:	e9 45 ff ff ff       	jmp    100634 <trap_entry>
+  1006f7:	6a 00                	push   $0x0
+  1006f9:	6a 14                	push   $0x14
+  1006fb:	e9 34 ff ff ff       	jmp    100634 <trap_entry>
 
-001006ef <trap_entry_21>:
+00100700 <trap_entry_21>:
     TRAP_STUB 21
-  1006ef:	6a 00                	push   $0x0
-  1006f1:	6a 15                	push   $0x15
-  1006f3:	e9 3c ff ff ff       	jmp    100634 <trap_entry>
+  100700:	6a 00                	push   $0x0
+  100702:	6a 15                	push   $0x15
+  100704:	e9 2b ff ff ff       	jmp    100634 <trap_entry>
 
-001006f8 <trap_entry_22>:
+00100709 <trap_entry_22>:
     TRAP_STUB 22
-  1006f8:	6a 00                	push   $0x0
-  1006fa:	6a 16                	push   $0x16
-  1006fc:	e9 33 ff ff ff       	jmp    100634 <trap_entry>
+  100709:	6a 00                	push   $0x0
+  10070b:	6a 16                	push   $0x16
+  10070d:	e9 22 ff ff ff       	jmp    100634 <trap_entry>
 
-00100701 <trap_entry_23>:
+00100712 <trap_entry_23>:
     TRAP_STUB 23
-  100701:	6a 00                	push   $0x0
-  100703:	6a 17                	push   $0x17
-  100705:	e9 2a ff ff ff       	jmp    100634 <trap_entry>
+  100712:	6a 00                	push   $0x0
+  100714:	6a 17                	push   $0x17
+  100716:	e9 19 ff ff ff       	jmp    100634 <trap_entry>
 
-0010070a <trap_entry_24>:
+0010071b <trap_entry_24>:
     TRAP_STUB 24
-  10070a:	6a 00                	push   $0x0
-  10070c:	6a 18                	push   $0x18
-  10070e:	e9 21 ff ff ff       	jmp    100634 <trap_entry>
+  10071b:	6a 00                	push   $0x0
+  10071d:	6a 18                	push   $0x18
+  10071f:	e9 10 ff ff ff       	jmp    100634 <trap_entry>
 
-00100713 <trap_entry_25>:
+00100724 <trap_entry_25>:
     TRAP_STUB 25
-  100713:	6a 00                	push   $0x0
-  100715:	6a 19                	push   $0x19
-  100717:	e9 18 ff ff ff       	jmp    100634 <trap_entry>
+  100724:	6a 00                	push   $0x0
+  100726:	6a 19                	push   $0x19
+  100728:	e9 07 ff ff ff       	jmp    100634 <trap_entry>
 
-0010071c <trap_entry_26>:
+0010072d <trap_entry_26>:
     TRAP_STUB 26
-  10071c:	6a 00                	push   $0x0
-  10071e:	6a 1a                	push   $0x1a
-  100720:	e9 0f ff ff ff       	jmp    100634 <trap_entry>
+  10072d:	6a 00                	push   $0x0
+  10072f:	6a 1a                	push   $0x1a
+  100731:	e9 fe fe ff ff       	jmp    100634 <trap_entry>
 
-00100725 <trap_entry_27>:
+00100736 <trap_entry_27>:
     TRAP_STUB 27
-  100725:	6a 00                	push   $0x0
-  100727:	6a 1b                	push   $0x1b
-  100729:	e9 06 ff ff ff       	jmp    100634 <trap_entry>
+  100736:	6a 00                	push   $0x0
+  100738:	6a 1b                	push   $0x1b
+  10073a:	e9 f5 fe ff ff       	jmp    100634 <trap_entry>
 
-0010072e <trap_entry_28>:
+0010073f <trap_entry_28>:
     TRAP_STUB 28
-  10072e:	6a 00                	push   $0x0
-  100730:	6a 1c                	push   $0x1c
-  100732:	e9 fd fe ff ff       	jmp    100634 <trap_entry>
+  10073f:	6a 00                	push   $0x0
+  100741:	6a 1c                	push   $0x1c
+  100743:	e9 ec fe ff ff       	jmp    100634 <trap_entry>
 
-00100737 <trap_entry_29>:
+00100748 <trap_entry_29>:
     TRAP_STUB 29
-  100737:	6a 00                	push   $0x0
-  100739:	6a 1d                	push   $0x1d
-  10073b:	e9 f4 fe ff ff       	jmp    100634 <trap_entry>
+  100748:	6a 00                	push   $0x0
+  10074a:	6a 1d                	push   $0x1d
+  10074c:	e9 e3 fe ff ff       	jmp    100634 <trap_entry>
 
-00100740 <trap_entry_30>:
+00100751 <trap_entry_30>:
     TRAP_STUB 30
-  100740:	6a 00                	push   $0x0
-  100742:	6a 1e                	push   $0x1e
-  100744:	e9 eb fe ff ff       	jmp    100634 <trap_entry>
+  100751:	6a 00                	push   $0x0
+  100753:	6a 1e                	push   $0x1e
+  100755:	e9 da fe ff ff       	jmp    100634 <trap_entry>
 
-00100749 <trap_entry_31>:
+0010075a <trap_entry_31>:
     TRAP_STUB 31
-  100749:	6a 00                	push   $0x0
-  10074b:	6a 1f                	push   $0x1f
-  10074d:	e9 e2 fe ff ff       	jmp    100634 <trap_entry>
+  10075a:	6a 00                	push   $0x0
+  10075c:	6a 1f                	push   $0x1f
+  10075e:	e9 d1 fe ff ff       	jmp    100634 <trap_entry>
 
-00100752 <trap_entry_0x80>:
+00100763 <trap_entry_0x80>:
     TRAP_STUB 0x80
-  100752:	6a 00                	push   $0x0
-  100754:	68 80 00 00 00       	push   $0x80
-  100759:	e9 d6 fe ff ff       	jmp    100634 <trap_entry>
+  100763:	6a 00                	push   $0x0
+  100765:	68 80 00 00 00       	push   $0x80
+  10076a:	e9 c5 fe ff ff       	jmp    100634 <trap_entry>
 
-0010075e <user_enter>:
+0010076f <user_enter>:
 
 # 参数：eax = 用户态栈顶地址 (user_esp)
 #        ebx = 用户代码入口 (entry)
 
 user_enter:
     cli
-  10075e:	fa                   	cli
+  10076f:	fa                   	cli
     # C调用约定：
     #   第一个参数 [esp+4]  -> entry (用户程序入口)
     #   第二个参数 [esp+8]  -> user_esp (用户栈顶)
     mov eax, [esp + 8]    # user_esp
-  10075f:	8b 44 24 08          	mov    0x8(%esp),%eax
+  100770:	8b 44 24 08          	mov    0x8(%esp),%eax
     mov ebx, [esp + 4]    # entry
-  100763:	8b 5c 24 04          	mov    0x4(%esp),%ebx
+  100774:	8b 5c 24 04          	mov    0x4(%esp),%ebx
 
     push 0x23             # SS (用户数据段选择子，ring3)
-  100767:	6a 23                	push   $0x23
+  100778:	6a 23                	push   $0x23
     push eax              # ESP (用户栈顶)
-  100769:	50                   	push   %eax
+  10077a:	50                   	push   %eax
     pushfd
-  10076a:	9c                   	pushf
+  10077b:	9c                   	pushf
     or dword ptr [esp], 0x200
-  10076b:	81 0c 24 00 02 00 00 	orl    $0x200,(%esp)
+  10077c:	81 0c 24 00 02 00 00 	orl    $0x200,(%esp)
     push 0x1B             # CS (用户代码段选择子，ring3)
-  100772:	6a 1b                	push   $0x1b
+  100783:	6a 1b                	push   $0x1b
     push ebx              # EIP (用户入口)
-  100774:	53                   	push   %ebx
+  100785:	53                   	push   %ebx
     iret
-  100775:	cf                   	iret
+  100786:	cf                   	iret
 
-00100776 <idt_flush>:
+00100787 <idt_flush>:
 
     
 .intel_syntax noprefix
 .globl idt_flush
 idt_flush:
 	mov eax, [esp+4]  #参数存入 eax 寄存器
-  100776:	8b 44 24 04          	mov    0x4(%esp),%eax
+  100787:	8b 44 24 04          	mov    0x4(%esp),%eax
 	lidt [eax]        #加载到 IDTR
-  10077a:	0f 01 18             	lidtl  (%eax)
+  10078b:	0f 01 18             	lidtl  (%eax)
 	ret
-  10077d:	c3                   	ret
+  10078e:	c3                   	ret
 
-0010077e <set_gdt_entry>:
+0010078f <set_gdt_entry>:
 
 struct gdt_entry gdt[GDT_SIZE];
 struct gdt_ptr gp;
 
 void set_gdt_entry(int num, uint32_t base, uint32_t limit, uint8_t access, uint8_t flags)
 {
-  10077e:	55                   	push   %ebp
-  10077f:	89 e5                	mov    %esp,%ebp
-  100781:	53                   	push   %ebx
-  100782:	8b 55 08             	mov    0x8(%ebp),%edx
-  100785:	8b 4d 0c             	mov    0xc(%ebp),%ecx
-  100788:	8b 45 10             	mov    0x10(%ebp),%eax
+  10078f:	55                   	push   %ebp
+  100790:	89 e5                	mov    %esp,%ebp
+  100792:	53                   	push   %ebx
+  100793:	8b 55 08             	mov    0x8(%ebp),%edx
+  100796:	8b 4d 0c             	mov    0xc(%ebp),%ecx
+  100799:	8b 45 10             	mov    0x10(%ebp),%eax
     gdt[num].base_low = base & 0xFFFF;
-  10078b:	66 89 0c d5 22 40 11 	mov    %cx,0x114022(,%edx,8)
-  100792:	00 
+  10079c:	66 89 0c d5 22 40 11 	mov    %cx,0x114022(,%edx,8)
+  1007a3:	00 
     gdt[num].base_middle = (base >> 16) & 0xFF;
-  100793:	89 cb                	mov    %ecx,%ebx
-  100795:	c1 eb 10             	shr    $0x10,%ebx
-  100798:	88 1c d5 24 40 11 00 	mov    %bl,0x114024(,%edx,8)
+  1007a4:	89 cb                	mov    %ecx,%ebx
+  1007a6:	c1 eb 10             	shr    $0x10,%ebx
+  1007a9:	88 1c d5 24 40 11 00 	mov    %bl,0x114024(,%edx,8)
     gdt[num].base_high = (base >> 24) & 0xFF;
-  10079f:	c1 e9 18             	shr    $0x18,%ecx
-  1007a2:	88 0c d5 27 40 11 00 	mov    %cl,0x114027(,%edx,8)
+  1007b0:	c1 e9 18             	shr    $0x18,%ecx
+  1007b3:	88 0c d5 27 40 11 00 	mov    %cl,0x114027(,%edx,8)
 
     gdt[num].limit_low = limit & 0xFFFF;
-  1007a9:	66 89 04 d5 20 40 11 	mov    %ax,0x114020(,%edx,8)
-  1007b0:	00 
+  1007ba:	66 89 04 d5 20 40 11 	mov    %ax,0x114020(,%edx,8)
+  1007c1:	00 
     gdt[num].granularity = ((limit >> 16) & 0x0F) | (flags & 0xF0);
-  1007b1:	c1 e8 10             	shr    $0x10,%eax
-  1007b4:	83 e0 0f             	and    $0xf,%eax
-  1007b7:	8a 4d 18             	mov    0x18(%ebp),%cl
-  1007ba:	83 e1 f0             	and    $0xfffffff0,%ecx
-  1007bd:	09 c8                	or     %ecx,%eax
-  1007bf:	88 04 d5 26 40 11 00 	mov    %al,0x114026(,%edx,8)
+  1007c2:	c1 e8 10             	shr    $0x10,%eax
+  1007c5:	83 e0 0f             	and    $0xf,%eax
+  1007c8:	8a 4d 18             	mov    0x18(%ebp),%cl
+  1007cb:	83 e1 f0             	and    $0xfffffff0,%ecx
+  1007ce:	09 c8                	or     %ecx,%eax
+  1007d0:	88 04 d5 26 40 11 00 	mov    %al,0x114026(,%edx,8)
 
     gdt[num].access = access;
-  1007c6:	8b 45 14             	mov    0x14(%ebp),%eax
-  1007c9:	88 04 d5 25 40 11 00 	mov    %al,0x114025(,%edx,8)
+  1007d7:	8b 45 14             	mov    0x14(%ebp),%eax
+  1007da:	88 04 d5 25 40 11 00 	mov    %al,0x114025(,%edx,8)
 }
-  1007d0:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-  1007d3:	c9                   	leave
-  1007d4:	c3                   	ret
+  1007e1:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+  1007e4:	c9                   	leave
+  1007e5:	c3                   	ret
 
-001007d5 <gdt_install>:
+001007e6 <gdt_install>:
 
 void gdt_install()
 {
-  1007d5:	55                   	push   %ebp
-  1007d6:	89 e5                	mov    %esp,%ebp
-  1007d8:	83 ec 14             	sub    $0x14,%esp
+  1007e6:	55                   	push   %ebp
+  1007e7:	89 e5                	mov    %esp,%ebp
+  1007e9:	83 ec 14             	sub    $0x14,%esp
     gp.limit = sizeof(gdt) - 1;
-  1007db:	66 c7 05 00 40 11 00 	movw   $0x2f,0x114000
-  1007e2:	2f 00 
+  1007ec:	66 c7 05 00 40 11 00 	movw   $0x2f,0x114000
+  1007f3:	2f 00 
     gp.base = (uint32_t)&gdt;
-  1007e4:	c7 05 02 40 11 00 20 	movl   $0x114020,0x114002
-  1007eb:	40 11 00 
+  1007f5:	c7 05 02 40 11 00 20 	movl   $0x114020,0x114002
+  1007fc:	40 11 00 
 
     // Null descriptor
     set_gdt_entry(0, 0, 0, 0, 0);
-  1007ee:	6a 00                	push   $0x0
-  1007f0:	6a 00                	push   $0x0
-  1007f2:	6a 00                	push   $0x0
-  1007f4:	6a 00                	push   $0x0
-  1007f6:	6a 00                	push   $0x0
-  1007f8:	e8 81 ff ff ff       	call   10077e <set_gdt_entry>
+  1007ff:	6a 00                	push   $0x0
+  100801:	6a 00                	push   $0x0
+  100803:	6a 00                	push   $0x0
+  100805:	6a 00                	push   $0x0
+  100807:	6a 00                	push   $0x0
+  100809:	e8 81 ff ff ff       	call   10078f <set_gdt_entry>
 
     // 内核代码段 (CPL=0)
     set_gdt_entry(1, 0x0, 0xFFFFF,
-  1007fd:	83 c4 14             	add    $0x14,%esp
-  100800:	68 c0 00 00 00       	push   $0xc0
-  100805:	68 9a 00 00 00       	push   $0x9a
-  10080a:	68 ff ff 0f 00       	push   $0xfffff
-  10080f:	6a 00                	push   $0x0
-  100811:	6a 01                	push   $0x1
-  100813:	e8 66 ff ff ff       	call   10077e <set_gdt_entry>
+  10080e:	83 c4 14             	add    $0x14,%esp
+  100811:	68 c0 00 00 00       	push   $0xc0
+  100816:	68 9a 00 00 00       	push   $0x9a
+  10081b:	68 ff ff 0f 00       	push   $0xfffff
+  100820:	6a 00                	push   $0x0
+  100822:	6a 01                	push   $0x1
+  100824:	e8 66 ff ff ff       	call   10078f <set_gdt_entry>
                   SEG_PRESENT | SEG_CODE | SEG_RING0,
                   GDT_GRAN_4K | GDT_32BIT);
 
     // 内核数据段 (CPL=0)
     set_gdt_entry(2, 0x0, 0xFFFFF,
-  100818:	83 c4 14             	add    $0x14,%esp
-  10081b:	68 c0 00 00 00       	push   $0xc0
-  100820:	68 92 00 00 00       	push   $0x92
-  100825:	68 ff ff 0f 00       	push   $0xfffff
-  10082a:	6a 00                	push   $0x0
-  10082c:	6a 02                	push   $0x2
-  10082e:	e8 4b ff ff ff       	call   10077e <set_gdt_entry>
+  100829:	83 c4 14             	add    $0x14,%esp
+  10082c:	68 c0 00 00 00       	push   $0xc0
+  100831:	68 92 00 00 00       	push   $0x92
+  100836:	68 ff ff 0f 00       	push   $0xfffff
+  10083b:	6a 00                	push   $0x0
+  10083d:	6a 02                	push   $0x2
+  10083f:	e8 4b ff ff ff       	call   10078f <set_gdt_entry>
                   SEG_PRESENT | SEG_DATA | SEG_RING0,
                   GDT_GRAN_4K | GDT_32BIT);
 
     // 用户代码段 (CPL=3)
     set_gdt_entry(3, 0x0, 0xFFFFFFFF,
-  100833:	83 c4 14             	add    $0x14,%esp
-  100836:	68 c0 00 00 00       	push   $0xc0
-  10083b:	68 fa 00 00 00       	push   $0xfa
-  100840:	6a ff                	push   $0xffffffff
-  100842:	6a 00                	push   $0x0
-  100844:	6a 03                	push   $0x3
-  100846:	e8 33 ff ff ff       	call   10077e <set_gdt_entry>
+  100844:	83 c4 14             	add    $0x14,%esp
+  100847:	68 c0 00 00 00       	push   $0xc0
+  10084c:	68 fa 00 00 00       	push   $0xfa
+  100851:	6a ff                	push   $0xffffffff
+  100853:	6a 00                	push   $0x0
+  100855:	6a 03                	push   $0x3
+  100857:	e8 33 ff ff ff       	call   10078f <set_gdt_entry>
                   SEG_PRESENT | SEG_CODE | SEG_RING3,
                   GDT_GRAN_4K | GDT_32BIT);
 
     // 用户数据段 (CPL=3)
     set_gdt_entry(4, 0x0, 0xFFFFFFFF,
-  10084b:	83 c4 14             	add    $0x14,%esp
-  10084e:	68 c0 00 00 00       	push   $0xc0
-  100853:	68 f2 00 00 00       	push   $0xf2
-  100858:	6a ff                	push   $0xffffffff
-  10085a:	6a 00                	push   $0x0
-  10085c:	6a 04                	push   $0x4
-  10085e:	e8 1b ff ff ff       	call   10077e <set_gdt_entry>
+  10085c:	83 c4 14             	add    $0x14,%esp
+  10085f:	68 c0 00 00 00       	push   $0xc0
+  100864:	68 f2 00 00 00       	push   $0xf2
+  100869:	6a ff                	push   $0xffffffff
+  10086b:	6a 00                	push   $0x0
+  10086d:	6a 04                	push   $0x4
+  10086f:	e8 1b ff ff ff       	call   10078f <set_gdt_entry>
                   SEG_PRESENT | SEG_DATA | SEG_RING3,
                   GDT_GRAN_4K | GDT_32BIT);
 
     // TSS段 (GDT[5])
     memset(&tss, 0, sizeof(tss));
-  100863:	83 c4 1c             	add    $0x1c,%esp
-  100866:	6a 68                	push   $0x68
-  100868:	6a 00                	push   $0x0
-  10086a:	68 60 40 11 00       	push   $0x114060
-  10086f:	e8 36 fc ff ff       	call   1004aa <memset>
+  100874:	83 c4 1c             	add    $0x1c,%esp
+  100877:	6a 68                	push   $0x68
+  100879:	6a 00                	push   $0x0
+  10087b:	68 60 40 11 00       	push   $0x114060
+  100880:	e8 25 fc ff ff       	call   1004aa <memset>
     tss.ss0 = 0x10; // 内核数据段选择子
-  100874:	c7 05 68 40 11 00 10 	movl   $0x10,0x114068
-  10087b:	00 00 00 
+  100885:	c7 05 68 40 11 00 10 	movl   $0x10,0x114068
+  10088c:	00 00 00 
     tss.esp0 = 0;   // 需要在任务切换时设置
-  10087e:	c7 05 64 40 11 00 00 	movl   $0x0,0x114064
-  100885:	00 00 00 
+  10088f:	c7 05 64 40 11 00 00 	movl   $0x0,0x114064
+  100896:	00 00 00 
     uint32_t base = (uint32_t)&tss;
     uint32_t limit = sizeof(tss) - 1;
     set_gdt_entry(5, base, limit, 0x89, 0x00); // 0x89: present, type=32位TSS
-  100888:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)
-  10088f:	68 89 00 00 00       	push   $0x89
-  100894:	6a 67                	push   $0x67
-  100896:	68 60 40 11 00       	push   $0x114060
-  10089b:	6a 05                	push   $0x5
-  10089d:	e8 dc fe ff ff       	call   10077e <set_gdt_entry>
+  100899:	c7 04 24 00 00 00 00 	movl   $0x0,(%esp)
+  1008a0:	68 89 00 00 00       	push   $0x89
+  1008a5:	6a 67                	push   $0x67
+  1008a7:	68 60 40 11 00       	push   $0x114060
+  1008ac:	6a 05                	push   $0x5
+  1008ae:	e8 dc fe ff ff       	call   10078f <set_gdt_entry>
 
     // 加载 GDTR
     asm volatile("lgdt (%0)" : : "r"(&gp));
-  1008a2:	b8 00 40 11 00       	mov    $0x114000,%eax
-  1008a7:	0f 01 10             	lgdtl  (%eax)
+  1008b3:	b8 00 40 11 00       	mov    $0x114000,%eax
+  1008b8:	0f 01 10             	lgdtl  (%eax)
 
     // 更新段寄存器，内核态 CS/DS/ES/FS/GS/SS
     asm volatile(
-  1008aa:	66 b8 10 00          	mov    $0x10,%ax
-  1008ae:	8e d8                	mov    %eax,%ds
-  1008b0:	8e c0                	mov    %eax,%es
-  1008b2:	8e e0                	mov    %eax,%fs
-  1008b4:	8e e8                	mov    %eax,%gs
+  1008bb:	66 b8 10 00          	mov    $0x10,%ax
+  1008bf:	8e d8                	mov    %eax,%ds
+  1008c1:	8e c0                	mov    %eax,%es
+  1008c3:	8e e0                	mov    %eax,%fs
+  1008c5:	8e e8                	mov    %eax,%gs
         :
         :
         : "ax");
 
     // 加载TSS
     asm volatile("ltr %%ax" : : "a"(5 << 3));
-  1008b6:	b8 28 00 00 00       	mov    $0x28,%eax
-  1008bb:	0f 00 d8             	ltr    %eax
+  1008c7:	b8 28 00 00 00       	mov    $0x28,%eax
+  1008cc:	0f 00 d8             	ltr    %ax
 }
-  1008be:	83 c4 20             	add    $0x20,%esp
-  1008c1:	c9                   	leave
-  1008c2:	c3                   	ret
+  1008cf:	83 c4 20             	add    $0x20,%esp
+  1008d2:	c9                   	leave
+  1008d3:	c3                   	ret
 
-001008c3 <tss_set>:
+001008d4 <tss_set>:
 
 // 设置TSS的esp0（内核栈顶），可在任务切换时调用
 void tss_set(uint32_t kernel_stack)
 {
-  1008c3:	55                   	push   %ebp
-  1008c4:	89 e5                	mov    %esp,%ebp
+  1008d4:	55                   	push   %ebp
+  1008d5:	89 e5                	mov    %esp,%ebp
     tss.esp0 = kernel_stack;
-  1008c6:	8b 45 08             	mov    0x8(%ebp),%eax
-  1008c9:	a3 64 40 11 00       	mov    %eax,0x114064
+  1008d7:	8b 45 08             	mov    0x8(%ebp),%eax
+  1008da:	a3 64 40 11 00       	mov    %eax,0x114064
 }
-  1008ce:	5d                   	pop    %ebp
-  1008cf:	c3                   	ret
+  1008df:	5d                   	pop    %ebp
+  1008e0:	c3                   	ret
 
-001008d0 <set_idt_gate>:
+001008e1 <set_idt_gate>:
 struct idt_entry idt[IDT_SIZE];
 struct idt_ptr idtp;
 extern void idt_flush(uint32_t);
 
 void set_idt_gate(int vec, void (*handler)(), uint16_t selector, uint8_t flags)
 {
-  1008d0:	55                   	push   %ebp
-  1008d1:	89 e5                	mov    %esp,%ebp
-  1008d3:	8b 45 08             	mov    0x8(%ebp),%eax
-  1008d6:	8b 55 0c             	mov    0xc(%ebp),%edx
+  1008e1:	55                   	push   %ebp
+  1008e2:	89 e5                	mov    %esp,%ebp
+  1008e4:	8b 45 08             	mov    0x8(%ebp),%eax
+  1008e7:	8b 55 0c             	mov    0xc(%ebp),%edx
     uint32_t addr = (uint32_t)handler;
 
     idt[vec].offset_low = addr & 0xFFFF;
-  1008d9:	66 89 14 c5 00 41 11 	mov    %dx,0x114100(,%eax,8)
-  1008e0:	00 
+  1008ea:	66 89 14 c5 00 41 11 	mov    %dx,0x114100(,%eax,8)
+  1008f1:	00 
     idt[vec].selector = selector;
-  1008e1:	8b 4d 10             	mov    0x10(%ebp),%ecx
-  1008e4:	66 89 0c c5 02 41 11 	mov    %cx,0x114102(,%eax,8)
-  1008eb:	00 
+  1008f2:	8b 4d 10             	mov    0x10(%ebp),%ecx
+  1008f5:	66 89 0c c5 02 41 11 	mov    %cx,0x114102(,%eax,8)
+  1008fc:	00 
     idt[vec].zero = 0;
-  1008ec:	c6 04 c5 04 41 11 00 	movb   $0x0,0x114104(,%eax,8)
-  1008f3:	00 
+  1008fd:	c6 04 c5 04 41 11 00 	movb   $0x0,0x114104(,%eax,8)
+  100904:	00 
     idt[vec].type_attr = flags;
-  1008f4:	8b 4d 14             	mov    0x14(%ebp),%ecx
-  1008f7:	88 0c c5 05 41 11 00 	mov    %cl,0x114105(,%eax,8)
+  100905:	8b 4d 14             	mov    0x14(%ebp),%ecx
+  100908:	88 0c c5 05 41 11 00 	mov    %cl,0x114105(,%eax,8)
     idt[vec].offset_high = (addr >> 16) & 0xFFFF;
-  1008fe:	c1 ea 10             	shr    $0x10,%edx
-  100901:	66 89 14 c5 06 41 11 	mov    %dx,0x114106(,%eax,8)
-  100908:	00 
+  10090f:	c1 ea 10             	shr    $0x10,%edx
+  100912:	66 89 14 c5 06 41 11 	mov    %dx,0x114106(,%eax,8)
+  100919:	00 
 }
-  100909:	5d                   	pop    %ebp
-  10090a:	c3                   	ret
+  10091a:	5d                   	pop    %ebp
+  10091b:	c3                   	ret
 
-0010090b <idt_load>:
+0010091c <idt_load>:
 
 void idt_load(void)
 {
-  10090b:	55                   	push   %ebp
-  10090c:	89 e5                	mov    %esp,%ebp
-  10090e:	83 ec 14             	sub    $0x14,%esp
+  10091c:	55                   	push   %ebp
+  10091d:	89 e5                	mov    %esp,%ebp
+  10091f:	83 ec 14             	sub    $0x14,%esp
     idtp.limit = sizeof(idt) - 1;
-  100911:	66 c7 05 e0 40 11 00 	movw   $0x7ff,0x1140e0
-  100918:	ff 07 
+  100922:	66 c7 05 e0 40 11 00 	movw   $0x7ff,0x1140e0
+  100929:	ff 07 
     idtp.base = (uint32_t)&idt;
-  10091a:	c7 05 e2 40 11 00 00 	movl   $0x114100,0x1140e2
-  100921:	41 11 00 
+  10092b:	c7 05 e2 40 11 00 00 	movl   $0x114100,0x1140e2
+  100932:	41 11 00 
 
     asm volatile("lidt %0" : : "m"(idtp));
-  100924:	0f 01 1d e0 40 11 00 	lidtl  0x1140e0
+  100935:	0f 01 1d e0 40 11 00 	lidtl  0x1140e0
 
     idt_flush((uint32_t)&idtp);
-  10092b:	68 e0 40 11 00       	push   $0x1140e0
-  100930:	e8 41 fe ff ff       	call   100776 <idt_flush>
+  10093c:	68 e0 40 11 00       	push   $0x1140e0
+  100941:	e8 41 fe ff ff       	call   100787 <idt_flush>
 }
-  100935:	83 c4 10             	add    $0x10,%esp
-  100938:	c9                   	leave
-  100939:	c3                   	ret
+  100946:	83 c4 10             	add    $0x10,%esp
+  100949:	c9                   	leave
+  10094a:	c3                   	ret
 
-0010093a <page_init>:
-
+0010094b <page_init>:
 __attribute__((aligned(4096))) struct PagedDirectoryEntry page_directory[1024];
 __attribute__((aligned(4096))) struct PageTableEntry page_table[512][1024]; // 512个页表，每个1024项
-uint8_t phys_bitmap[512]; // 每位表示一个物理页
+uint8_t phys_bitmap[512];                                                   // 每位表示一个物理页
 
-void page_init() {
-  10093a:	55                   	push   %ebp
-  10093b:	89 e5                	mov    %esp,%ebp
-  10093d:	56                   	push   %esi
-  10093e:	53                   	push   %ebx
+void page_init()
+{
+  10094b:	55                   	push   %ebp
+  10094c:	89 e5                	mov    %esp,%ebp
+  10094e:	56                   	push   %esi
+  10094f:	53                   	push   %ebx
     // 初始化页目录和页表
-    for (int i = 0; i < 1024; i++) {
-  10093f:	b8 00 00 00 00       	mov    $0x0,%eax
+    for (int i = 0; i < 1024; i++)
+  100950:	b8 00 00 00 00       	mov    $0x0,%eax
+    {
         page_directory[i].present = 0;
         page_directory[i].rw = 1;
-  100944:	8a 14 85 00 60 31 00 	mov    0x316000(,%eax,4),%dl
-  10094b:	83 e2 fa             	and    $0xfffffffa,%edx
+  100955:	8a 14 85 00 60 31 00 	mov    0x316000(,%eax,4),%dl
+  10095c:	83 e2 fa             	and    $0xfffffffa,%edx
         page_directory[i].user = 0;
-  10094e:	83 ca 02             	or     $0x2,%edx
-  100951:	88 14 85 00 60 31 00 	mov    %dl,0x316000(,%eax,4)
+  10095f:	83 ca 02             	or     $0x2,%edx
+  100962:	88 14 85 00 60 31 00 	mov    %dl,0x316000(,%eax,4)
         page_directory[i].reserved = 0;
-  100958:	66 81 24 85 00 60 31 	andw   $0xf007,0x316000(,%eax,4)
-  10095f:	00 07 f0 
+  100969:	66 81 24 85 00 60 31 	andw   $0xf007,0x316000(,%eax,4)
+  100970:	00 07 f0 
         page_directory[i].table_addr = 0;
-  100962:	81 24 85 00 60 31 00 	andl   $0xfff,0x316000(,%eax,4)
-  100969:	ff 0f 00 00 
-    for (int i = 0; i < 1024; i++) {
-  10096d:	40                   	inc    %eax
-  10096e:	3d 00 04 00 00       	cmp    $0x400,%eax
-  100973:	75 cf                	jne    100944 <page_init+0xa>
+  100973:	81 24 85 00 60 31 00 	andl   $0xfff,0x316000(,%eax,4)
+  10097a:	ff 0f 00 00 
+    for (int i = 0; i < 1024; i++)
+  10097e:	40                   	inc    %eax
+  10097f:	3d 00 04 00 00       	cmp    $0x400,%eax
+  100984:	75 cf                	jne    100955 <page_init+0xa>
     }
 
-    for (int i = 0; i < 4; i++) {
-  100975:	be 00 00 00 00       	mov    $0x0,%esi
-        for (int j = 0; j < 1024; j++) {
-  10097a:	b9 00 00 00 00       	mov    $0x0,%ecx
+    for (int i = 0; i < 4; i++)
+  100986:	be 00 00 00 00       	mov    $0x0,%esi
+    {
+        for (int j = 0; j < 1024; j++)
+  10098b:	b9 00 00 00 00       	mov    $0x0,%ecx
+        {
             page_table[i][j].present = 0;
-  10097f:	89 f3                	mov    %esi,%ebx
-  100981:	c1 e3 0a             	shl    $0xa,%ebx
-  100984:	8d 04 0b             	lea    (%ebx,%ecx,1),%eax
+  100990:	89 f3                	mov    %esi,%ebx
+  100992:	c1 e3 0a             	shl    $0xa,%ebx
+  100995:	8d 04 0b             	lea    (%ebx,%ecx,1),%eax
             page_table[i][j].rw = 1;
-  100987:	8a 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%dl
-  10098e:	83 e2 fa             	and    $0xfffffffa,%edx
+  100998:	8a 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%dl
+  10099f:	83 e2 fa             	and    $0xfffffffa,%edx
             page_table[i][j].user = 0;
-  100991:	83 ca 02             	or     $0x2,%edx
-  100994:	88 14 85 00 60 11 00 	mov    %dl,0x116000(,%eax,4)
+  1009a2:	83 ca 02             	or     $0x2,%edx
+  1009a5:	88 14 85 00 60 11 00 	mov    %dl,0x116000(,%eax,4)
             page_table[i][j].reserved = 0;
-  10099b:	66 81 24 85 00 60 11 	andw   $0xf007,0x116000(,%eax,4)
-  1009a2:	00 07 f0 
+  1009ac:	66 81 24 85 00 60 11 	andw   $0xf007,0x116000(,%eax,4)
+  1009b3:	00 07 f0 
             page_table[i][j].frame_addr = 0;
-  1009a5:	81 24 85 00 60 11 00 	andl   $0xfff,0x116000(,%eax,4)
-  1009ac:	ff 0f 00 00 
-        for (int j = 0; j < 1024; j++) {
-  1009b0:	41                   	inc    %ecx
-  1009b1:	81 f9 00 04 00 00    	cmp    $0x400,%ecx
-  1009b7:	75 cb                	jne    100984 <page_init+0x4a>
-    for (int i = 0; i < 4; i++) {
-  1009b9:	46                   	inc    %esi
-  1009ba:	83 fe 04             	cmp    $0x4,%esi
-  1009bd:	75 bb                	jne    10097a <page_init+0x40>
+  1009b6:	81 24 85 00 60 11 00 	andl   $0xfff,0x116000(,%eax,4)
+  1009bd:	ff 0f 00 00 
+        for (int j = 0; j < 1024; j++)
+  1009c1:	41                   	inc    %ecx
+  1009c2:	81 f9 00 04 00 00    	cmp    $0x400,%ecx
+  1009c8:	75 cb                	jne    100995 <page_init+0x4a>
+    for (int i = 0; i < 4; i++)
+  1009ca:	46                   	inc    %esi
+  1009cb:	83 fe 04             	cmp    $0x4,%esi
+  1009ce:	75 bb                	jne    10098b <page_init+0x40>
         }
     }
 
     // 初始化物理页位图，所有页初始为可用（除了内核使用的）
     memset(phys_bitmap, 0, sizeof(phys_bitmap));
-  1009bf:	83 ec 04             	sub    $0x4,%esp
-  1009c2:	68 00 02 00 00       	push   $0x200
-  1009c7:	6a 00                	push   $0x0
-  1009c9:	68 00 50 11 00       	push   $0x115000
-  1009ce:	e8 d7 fa ff ff       	call   1004aa <memset>
-  1009d3:	83 c4 10             	add    $0x10,%esp
+  1009d0:	83 ec 04             	sub    $0x4,%esp
+  1009d3:	68 00 02 00 00       	push   $0x200
+  1009d8:	6a 00                	push   $0x0
+  1009da:	68 00 50 11 00       	push   $0x115000
+  1009df:	e8 c6 fa ff ff       	call   1004aa <memset>
+  1009e4:	83 c4 10             	add    $0x10,%esp
     // 标记内核使用的页为已用（假设内核使用前64页，256KB）
-    for (int i = 0; i < 64; i++) {
-  1009d6:	b8 00 00 00 00       	mov    $0x0,%eax
+    for (int i = 0; i < 64; i++)
+  1009e7:	b8 00 00 00 00       	mov    $0x0,%eax
     bitmap[bit / 8] |= (1 << (bit % 8));
-  1009db:	bb 01 00 00 00       	mov    $0x1,%ebx
-  1009e0:	eb 1a                	jmp    1009fc <page_init+0xc2>
-  1009e2:	c1 fa 03             	sar    $0x3,%edx
-  1009e5:	89 c1                	mov    %eax,%ecx
-  1009e7:	83 e1 07             	and    $0x7,%ecx
-  1009ea:	89 de                	mov    %ebx,%esi
-  1009ec:	d3 e6                	shl    %cl,%esi
-  1009ee:	89 f1                	mov    %esi,%ecx
-  1009f0:	08 8a 00 50 11 00    	or     %cl,0x115000(%edx)
-    for (int i = 0; i < 64; i++) {
-  1009f6:	40                   	inc    %eax
-  1009f7:	83 f8 40             	cmp    $0x40,%eax
-  1009fa:	74 0b                	je     100a07 <page_init+0xcd>
+  1009ec:	bb 01 00 00 00       	mov    $0x1,%ebx
+  1009f1:	eb 1a                	jmp    100a0d <page_init+0xc2>
+  1009f3:	c1 fa 03             	sar    $0x3,%edx
+  1009f6:	89 c1                	mov    %eax,%ecx
+  1009f8:	83 e1 07             	and    $0x7,%ecx
+  1009fb:	89 de                	mov    %ebx,%esi
+  1009fd:	d3 e6                	shl    %cl,%esi
+  1009ff:	89 f1                	mov    %esi,%ecx
+  100a01:	08 8a 00 50 11 00    	or     %cl,0x115000(%edx)
+    for (int i = 0; i < 64; i++)
+  100a07:	40                   	inc    %eax
+  100a08:	83 f8 40             	cmp    $0x40,%eax
+  100a0b:	74 0b                	je     100a18 <page_init+0xcd>
     bitmap[bit / 8] |= (1 << (bit % 8));
-  1009fc:	89 c2                	mov    %eax,%edx
-  1009fe:	85 c0                	test   %eax,%eax
-  100a00:	79 e0                	jns    1009e2 <page_init+0xa8>
-  100a02:	8d 50 07             	lea    0x7(%eax),%edx
-  100a05:	eb db                	jmp    1009e2 <page_init+0xa8>
+  100a0d:	89 c2                	mov    %eax,%edx
+  100a0f:	85 c0                	test   %eax,%eax
+  100a11:	79 e0                	jns    1009f3 <page_init+0xa8>
+  100a13:	8d 50 07             	lea    0x7(%eax),%edx
+  100a16:	eb db                	jmp    1009f3 <page_init+0xa8>
+    {
         set_bit(phys_bitmap, i);
     }
 
     // 映射前 4MB 内存
-    for (int i = 0; i < 1024; i++) {
-  100a07:	b8 00 00 00 00       	mov    $0x0,%eax
+    for (int i = 0; i < 1024; i++)
+  100a18:	b8 00 00 00 00       	mov    $0x0,%eax
+    {
         page_table[0][i].present = 1;
         page_table[0][i].rw = 1;
-  100a0c:	8a 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%dl
-  100a13:	83 ca 03             	or     $0x3,%edx
+  100a1d:	8a 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%dl
+  100a24:	83 ca 03             	or     $0x3,%edx
         page_table[0][i].user = 0;
-  100a16:	83 e2 fb             	and    $0xfffffffb,%edx
-  100a19:	88 14 85 00 60 11 00 	mov    %dl,0x116000(,%eax,4)
+  100a27:	83 e2 fb             	and    $0xfffffffb,%edx
+  100a2a:	88 14 85 00 60 11 00 	mov    %dl,0x116000(,%eax,4)
         page_table[0][i].frame_addr = i; // 映射到物理地址 i * 4KB
-  100a20:	89 c1                	mov    %eax,%ecx
-  100a22:	c1 e1 0c             	shl    $0xc,%ecx
-  100a25:	8b 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%edx
-  100a2c:	81 e2 ff 0f 00 00    	and    $0xfff,%edx
-  100a32:	09 ca                	or     %ecx,%edx
-  100a34:	89 14 85 00 60 11 00 	mov    %edx,0x116000(,%eax,4)
-    for (int i = 0; i < 1024; i++) {
-  100a3b:	40                   	inc    %eax
-  100a3c:	3d 00 04 00 00       	cmp    $0x400,%eax
-  100a41:	75 c9                	jne    100a0c <page_init+0xd2>
+  100a31:	89 c1                	mov    %eax,%ecx
+  100a33:	c1 e1 0c             	shl    $0xc,%ecx
+  100a36:	8b 14 85 00 60 11 00 	mov    0x116000(,%eax,4),%edx
+  100a3d:	81 e2 ff 0f 00 00    	and    $0xfff,%edx
+  100a43:	09 ca                	or     %ecx,%edx
+  100a45:	89 14 85 00 60 11 00 	mov    %edx,0x116000(,%eax,4)
+    for (int i = 0; i < 1024; i++)
+  100a4c:	40                   	inc    %eax
+  100a4d:	3d 00 04 00 00       	cmp    $0x400,%eax
+  100a52:	75 c9                	jne    100a1d <page_init+0xd2>
     }
 
     // 设置页目录的第一个条目指向第一个页表
     page_directory[0].present = 1;
     page_directory[0].rw = 1;
-  100a43:	a0 00 60 31 00       	mov    0x316000,%al
-  100a48:	83 c8 03             	or     $0x3,%eax
+  100a54:	a0 00 60 31 00       	mov    0x316000,%al
+  100a59:	83 c8 03             	or     $0x3,%eax
     page_directory[0].user = 0;
-  100a4b:	83 e0 fb             	and    $0xfffffffb,%eax
-  100a4e:	a2 00 60 31 00       	mov    %al,0x316000
+  100a5c:	83 e0 fb             	and    $0xfffffffb,%eax
+  100a5f:	a2 00 60 31 00       	mov    %al,0x316000
     page_directory[0].table_addr = ((uint32_t)page_table[0]) >> 12;
-  100a53:	ba 00 60 11 00       	mov    $0x116000,%edx
-  100a58:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
-  100a5e:	a1 00 60 31 00       	mov    0x316000,%eax
-  100a63:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100a68:	09 d0                	or     %edx,%eax
-  100a6a:	a3 00 60 31 00       	mov    %eax,0x316000
+  100a64:	ba 00 60 11 00       	mov    $0x116000,%edx
+  100a69:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
+  100a6f:	a1 00 60 31 00       	mov    0x316000,%eax
+  100a74:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100a79:	09 d0                	or     %edx,%eax
+  100a7b:	a3 00 60 31 00       	mov    %eax,0x316000
 
     // 映射直接映射区域 0xC0000000 到物理 0 (前 4MB)
-    for (int i = 0; i < 1024; i++) {
-  100a6f:	ba 00 00 00 00       	mov    $0x0,%edx
+    for (int i = 0; i < 1024; i++)
+  100a80:	ba 00 00 00 00       	mov    $0x0,%edx
+    {
         page_table[1][i].present = 1;
-  100a74:	8d 8a 00 04 00 00    	lea    0x400(%edx),%ecx
+  100a85:	8d 8a 00 04 00 00    	lea    0x400(%edx),%ecx
         page_table[1][i].rw = 1;
-  100a7a:	8a 04 8d 00 60 11 00 	mov    0x116000(,%ecx,4),%al
-  100a81:	83 c8 03             	or     $0x3,%eax
+  100a8b:	8a 04 8d 00 60 11 00 	mov    0x116000(,%ecx,4),%al
+  100a92:	83 c8 03             	or     $0x3,%eax
         page_table[1][i].user = 0;
-  100a84:	83 e0 fb             	and    $0xfffffffb,%eax
-  100a87:	88 04 8d 00 60 11 00 	mov    %al,0x116000(,%ecx,4)
+  100a95:	83 e0 fb             	and    $0xfffffffb,%eax
+  100a98:	88 04 8d 00 60 11 00 	mov    %al,0x116000(,%ecx,4)
         page_table[1][i].frame_addr = i; // 映射到物理地址 i * 4KB
-  100a8e:	89 d3                	mov    %edx,%ebx
-  100a90:	c1 e3 0c             	shl    $0xc,%ebx
-  100a93:	8b 04 8d 00 60 11 00 	mov    0x116000(,%ecx,4),%eax
-  100a9a:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100a9f:	09 d8                	or     %ebx,%eax
-  100aa1:	89 04 8d 00 60 11 00 	mov    %eax,0x116000(,%ecx,4)
-    for (int i = 0; i < 1024; i++) {
-  100aa8:	42                   	inc    %edx
-  100aa9:	81 fa 00 04 00 00    	cmp    $0x400,%edx
-  100aaf:	75 c3                	jne    100a74 <page_init+0x13a>
+  100a9f:	89 d3                	mov    %edx,%ebx
+  100aa1:	c1 e3 0c             	shl    $0xc,%ebx
+  100aa4:	8b 04 8d 00 60 11 00 	mov    0x116000(,%ecx,4),%eax
+  100aab:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100ab0:	09 d8                	or     %ebx,%eax
+  100ab2:	89 04 8d 00 60 11 00 	mov    %eax,0x116000(,%ecx,4)
+    for (int i = 0; i < 1024; i++)
+  100ab9:	42                   	inc    %edx
+  100aba:	81 fa 00 04 00 00    	cmp    $0x400,%edx
+  100ac0:	75 c3                	jne    100a85 <page_init+0x13a>
     }
 
     // 设置页目录的第768个条目指向第二个页表 (0xC0000000)
     page_directory[768].present = 1;
     page_directory[768].rw = 1;
-  100ab1:	a0 00 6c 31 00       	mov    0x316c00,%al
-  100ab6:	83 c8 03             	or     $0x3,%eax
+  100ac2:	a0 00 6c 31 00       	mov    0x316c00,%al
+  100ac7:	83 c8 03             	or     $0x3,%eax
     page_directory[768].user = 0;
-  100ab9:	83 e0 fb             	and    $0xfffffffb,%eax
-  100abc:	a2 00 6c 31 00       	mov    %al,0x316c00
+  100aca:	83 e0 fb             	and    $0xfffffffb,%eax
+  100acd:	a2 00 6c 31 00       	mov    %al,0x316c00
     page_directory[768].table_addr = ((uint32_t)page_table[1]) >> 12;
-  100ac1:	ba 00 70 11 00       	mov    $0x117000,%edx
-  100ac6:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
-  100acc:	a1 00 6c 31 00       	mov    0x316c00,%eax
-  100ad1:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100ad6:	09 d0                	or     %edx,%eax
-  100ad8:	a3 00 6c 31 00       	mov    %eax,0x316c00
+  100ad2:	ba 00 70 11 00       	mov    $0x117000,%edx
+  100ad7:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
+  100add:	a1 00 6c 31 00       	mov    0x316c00,%eax
+  100ae2:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100ae7:	09 d0                	or     %edx,%eax
+  100ae9:	a3 00 6c 31 00       	mov    %eax,0x316c00
 
     // 预先设置用户程序页目录项（页目录索引2，对应0x00800000）
     page_directory[2].present = 1;
     page_directory[2].rw = 1;
     page_directory[2].user = 1;
-  100add:	80 0d 08 60 31 00 07 	orb    $0x7,0x316008
+  100aee:	80 0d 08 60 31 00 07 	orb    $0x7,0x316008
     page_directory[2].table_addr = ((uint32_t)page_table[2]) >> 12;
-  100ae4:	ba 00 80 11 00       	mov    $0x118000,%edx
-  100ae9:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
-  100aef:	a1 08 60 31 00       	mov    0x316008,%eax
-  100af4:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100af9:	09 d0                	or     %edx,%eax
-  100afb:	a3 08 60 31 00       	mov    %eax,0x316008
+  100af5:	ba 00 80 11 00       	mov    $0x118000,%edx
+  100afa:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
+  100b00:	a1 08 60 31 00       	mov    0x316008,%eax
+  100b05:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100b0a:	09 d0                	or     %edx,%eax
+  100b0c:	a3 08 60 31 00       	mov    %eax,0x316008
 
-    //内核页表，0-1MB
+    // 内核页表，0-1MB
 
     // 加载页目录地址到 CR3 寄存器
     asm volatile("mov %0, %%cr3" : : "r"(&page_directory));
-  100b00:	b8 00 60 31 00       	mov    $0x316000,%eax
-  100b05:	0f 22 d8             	mov    %eax,%cr3
+  100b11:	b8 00 60 31 00       	mov    $0x316000,%eax
+  100b16:	0f 22 d8             	mov    %eax,%cr3
 
     // 启用分页，设置 CR0 寄存器的分页位
     uint32_t cr0;
     asm volatile("mov %%cr0, %0" : "=r"(cr0));
-  100b08:	0f 20 c0             	mov    %cr0,%eax
+  100b19:	0f 20 c0             	mov    %cr0,%eax
     cr0 |= 0x80000000; // 设置分页位
-  100b0b:	0d 00 00 00 80       	or     $0x80000000,%eax
+  100b1c:	0d 00 00 00 80       	or     $0x80000000,%eax
     asm volatile("mov %0, %%cr0" : : "r"(cr0));
-  100b10:	0f 22 c0             	mov    %eax,%cr0
+  100b21:	0f 22 c0             	mov    %eax,%cr0
 }
-  100b13:	8d 65 f8             	lea    -0x8(%ebp),%esp
-  100b16:	5b                   	pop    %ebx
-  100b17:	5e                   	pop    %esi
-  100b18:	5d                   	pop    %ebp
-  100b19:	c3                   	ret
+  100b24:	8d 65 f8             	lea    -0x8(%ebp),%esp
+  100b27:	5b                   	pop    %ebx
+  100b28:	5e                   	pop    %esi
+  100b29:	5d                   	pop    %ebp
+  100b2a:	c3                   	ret
 
-00100b1a <alloc_phys_page>:
+00100b2b <alloc_phys_page>:
 
-uint32_t alloc_phys_page() {
-  100b1a:	55                   	push   %ebp
-  100b1b:	89 e5                	mov    %esp,%ebp
-  100b1d:	56                   	push   %esi
-  100b1e:	53                   	push   %ebx
+uint32_t alloc_phys_page()
+{
+  100b2b:	55                   	push   %ebp
+  100b2c:	89 e5                	mov    %esp,%ebp
+  100b2e:	56                   	push   %esi
+  100b2f:	53                   	push   %ebx
     return (bitmap[bit / 8] >> (bit % 8)) & 1;
-  100b1f:	8a 1d 00 50 11 00    	mov    0x115000,%bl
-    for (int i = 0; i < 4096; i++) {
-        if (!get_bit(phys_bitmap, i)) { // 页空闲
-  100b25:	f6 c3 01             	test   $0x1,%bl
-  100b28:	74 38                	je     100b62 <alloc_phys_page+0x48>
-    for (int i = 0; i < 4096; i++) {
-  100b2a:	b8 00 00 00 00       	mov    $0x0,%eax
-  100b2f:	eb 1e                	jmp    100b4f <alloc_phys_page+0x35>
+  100b30:	8a 1d 00 50 11 00    	mov    0x115000,%bl
+    for (int i = 0; i < 4096; i++)
+    {
+        if (!get_bit(phys_bitmap, i))
+  100b36:	f6 c3 01             	test   $0x1,%bl
+  100b39:	74 38                	je     100b73 <alloc_phys_page+0x48>
+    for (int i = 0; i < 4096; i++)
+  100b3b:	b8 00 00 00 00       	mov    $0x0,%eax
+  100b40:	eb 1e                	jmp    100b60 <alloc_phys_page+0x35>
     return (bitmap[bit / 8] >> (bit % 8)) & 1;
-  100b31:	c1 fa 03             	sar    $0x3,%edx
-  100b34:	8d b2 00 50 11 00    	lea    0x115000(%edx),%esi
-  100b3a:	8a 9a 00 50 11 00    	mov    0x115000(%edx),%bl
-  100b40:	89 c1                	mov    %eax,%ecx
-  100b42:	83 e1 07             	and    $0x7,%ecx
-  100b45:	0f b6 d3             	movzbl %bl,%edx
-  100b48:	d3 fa                	sar    %cl,%edx
-        if (!get_bit(phys_bitmap, i)) { // 页空闲
-  100b4a:	f6 c2 01             	test   $0x1,%dl
-  100b4d:	74 22                	je     100b71 <alloc_phys_page+0x57>
-    for (int i = 0; i < 4096; i++) {
-  100b4f:	40                   	inc    %eax
-  100b50:	3d 00 10 00 00       	cmp    $0x1000,%eax
-  100b55:	74 2c                	je     100b83 <alloc_phys_page+0x69>
+  100b42:	c1 fa 03             	sar    $0x3,%edx
+  100b45:	8d b2 00 50 11 00    	lea    0x115000(%edx),%esi
+  100b4b:	8a 9a 00 50 11 00    	mov    0x115000(%edx),%bl
+  100b51:	89 c1                	mov    %eax,%ecx
+  100b53:	83 e1 07             	and    $0x7,%ecx
+  100b56:	0f b6 d3             	movzbl %bl,%edx
+  100b59:	d3 fa                	sar    %cl,%edx
+        if (!get_bit(phys_bitmap, i))
+  100b5b:	f6 c2 01             	test   $0x1,%dl
+  100b5e:	74 22                	je     100b82 <alloc_phys_page+0x57>
+    for (int i = 0; i < 4096; i++)
+  100b60:	40                   	inc    %eax
+  100b61:	3d 00 10 00 00       	cmp    $0x1000,%eax
+  100b66:	74 2c                	je     100b94 <alloc_phys_page+0x69>
     return (bitmap[bit / 8] >> (bit % 8)) & 1;
-  100b57:	89 c2                	mov    %eax,%edx
-  100b59:	85 c0                	test   %eax,%eax
-  100b5b:	79 d4                	jns    100b31 <alloc_phys_page+0x17>
-  100b5d:	8d 50 07             	lea    0x7(%eax),%edx
-  100b60:	eb cf                	jmp    100b31 <alloc_phys_page+0x17>
-  100b62:	b9 00 00 00 00       	mov    $0x0,%ecx
-  100b67:	be 00 50 11 00       	mov    $0x115000,%esi
-    for (int i = 0; i < 4096; i++) {
-  100b6c:	b8 00 00 00 00       	mov    $0x0,%eax
+  100b68:	89 c2                	mov    %eax,%edx
+  100b6a:	85 c0                	test   %eax,%eax
+  100b6c:	79 d4                	jns    100b42 <alloc_phys_page+0x17>
+  100b6e:	8d 50 07             	lea    0x7(%eax),%edx
+  100b71:	eb cf                	jmp    100b42 <alloc_phys_page+0x17>
+  100b73:	b9 00 00 00 00       	mov    $0x0,%ecx
+  100b78:	be 00 50 11 00       	mov    $0x115000,%esi
+    for (int i = 0; i < 4096; i++)
+  100b7d:	b8 00 00 00 00       	mov    $0x0,%eax
     bitmap[bit / 8] |= (1 << (bit % 8));
-  100b71:	ba 01 00 00 00       	mov    $0x1,%edx
-  100b76:	d3 e2                	shl    %cl,%edx
-  100b78:	09 d3                	or     %edx,%ebx
-  100b7a:	88 1e                	mov    %bl,(%esi)
-            set_bit(phys_bitmap, i);   // 标记为已用
-            return i * PAGE_SIZE;      // 返回物理地址
-  100b7c:	c1 e0 0c             	shl    $0xc,%eax
+  100b82:	ba 01 00 00 00       	mov    $0x1,%edx
+  100b87:	d3 e2                	shl    %cl,%edx
+  100b89:	09 d3                	or     %edx,%ebx
+  100b8b:	88 1e                	mov    %bl,(%esi)
+        {                            // 页空闲
+            set_bit(phys_bitmap, i); // 标记为已用
+            return i * PAGE_SIZE;    // 返回物理地址
+  100b8d:	c1 e0 0c             	shl    $0xc,%eax
         }
     }
     return 0; // 没有空闲页
 }
-  100b7f:	5b                   	pop    %ebx
-  100b80:	5e                   	pop    %esi
-  100b81:	5d                   	pop    %ebp
-  100b82:	c3                   	ret
+  100b90:	5b                   	pop    %ebx
+  100b91:	5e                   	pop    %esi
+  100b92:	5d                   	pop    %ebp
+  100b93:	c3                   	ret
     return 0; // 没有空闲页
-  100b83:	b8 00 00 00 00       	mov    $0x0,%eax
-  100b88:	eb f5                	jmp    100b7f <alloc_phys_page+0x65>
+  100b94:	b8 00 00 00 00       	mov    $0x0,%eax
+  100b99:	eb f5                	jmp    100b90 <alloc_phys_page+0x65>
 
-00100b8a <free_phys_page>:
+00100b9b <free_phys_page>:
 
-void free_phys_page(uint32_t addr) {
-  100b8a:	55                   	push   %ebp
-  100b8b:	89 e5                	mov    %esp,%ebp
-  100b8d:	8b 45 08             	mov    0x8(%ebp),%eax
+void free_phys_page(uint32_t addr)
+{
+  100b9b:	55                   	push   %ebp
+  100b9c:	89 e5                	mov    %esp,%ebp
+  100b9e:	8b 45 08             	mov    0x8(%ebp),%eax
     int index = addr / PAGE_SIZE;
-  100b90:	89 c1                	mov    %eax,%ecx
-  100b92:	c1 e9 0c             	shr    $0xc,%ecx
+  100ba1:	89 c1                	mov    %eax,%ecx
+  100ba3:	c1 e9 0c             	shr    $0xc,%ecx
     bitmap[bit / 8] &= ~(1 << (bit % 8));
-  100b95:	c1 e8 0f             	shr    $0xf,%eax
-  100b98:	83 e1 07             	and    $0x7,%ecx
-  100b9b:	ba 01 00 00 00       	mov    $0x1,%edx
-  100ba0:	d3 e2                	shl    %cl,%edx
-  100ba2:	f7 d2                	not    %edx
-  100ba4:	20 90 00 50 11 00    	and    %dl,0x115000(%eax)
+  100ba6:	c1 e8 0f             	shr    $0xf,%eax
+  100ba9:	83 e1 07             	and    $0x7,%ecx
+  100bac:	ba 01 00 00 00       	mov    $0x1,%edx
+  100bb1:	d3 e2                	shl    %cl,%edx
+  100bb3:	f7 d2                	not    %edx
+  100bb5:	20 90 00 50 11 00    	and    %dl,0x115000(%eax)
     clear_bit(phys_bitmap, index);
 }
-  100baa:	5d                   	pop    %ebp
-  100bab:	c3                   	ret
+  100bbb:	5d                   	pop    %ebp
+  100bbc:	c3                   	ret
 
-00100bac <alloc_page>:
+00100bbd <alloc_page>:
 
-void alloc_page(uint32_t fault_addr, bool is_write, bool is_user) {
-  100bac:	55                   	push   %ebp
-  100bad:	89 e5                	mov    %esp,%ebp
-  100baf:	57                   	push   %edi
-  100bb0:	56                   	push   %esi
-  100bb1:	53                   	push   %ebx
-  100bb2:	83 ec 1c             	sub    $0x1c,%esp
-  100bb5:	8b 45 08             	mov    0x8(%ebp),%eax
-  100bb8:	8b 7d 0c             	mov    0xc(%ebp),%edi
-  100bbb:	8b 75 10             	mov    0x10(%ebp),%esi
-    uint32_t dir_idx   = (fault_addr >> 22) & 0x3FF; // 高 10 位
-  100bbe:	89 c3                	mov    %eax,%ebx
-  100bc0:	c1 eb 16             	shr    $0x16,%ebx
+void alloc_page(uint32_t fault_addr, bool is_write, bool is_user)
+{
+  100bbd:	55                   	push   %ebp
+  100bbe:	89 e5                	mov    %esp,%ebp
+  100bc0:	57                   	push   %edi
+  100bc1:	56                   	push   %esi
+  100bc2:	53                   	push   %ebx
+  100bc3:	83 ec 1c             	sub    $0x1c,%esp
+  100bc6:	8b 7d 0c             	mov    0xc(%ebp),%edi
+  100bc9:	8b 45 10             	mov    0x10(%ebp),%eax
+  100bcc:	89 45 e0             	mov    %eax,-0x20(%ebp)
+    uint32_t dir_idx = (fault_addr >> 22) & 0x3FF;   // 高 10 位
+  100bcf:	8b 5d 08             	mov    0x8(%ebp),%ebx
+  100bd2:	c1 eb 16             	shr    $0x16,%ebx
     uint32_t table_idx = (fault_addr >> 12) & 0x3FF; // 中间 10 位
-  100bc3:	c1 e8 0c             	shr    $0xc,%eax
-  100bc6:	25 ff 03 00 00       	and    $0x3ff,%eax
-  100bcb:	89 45 e4             	mov    %eax,-0x1c(%ebp)
+  100bd5:	8b 45 08             	mov    0x8(%ebp),%eax
+  100bd8:	c1 e8 0c             	shr    $0xc,%eax
+  100bdb:	25 ff 03 00 00       	and    $0x3ff,%eax
+  100be0:	89 45 e4             	mov    %eax,-0x1c(%ebp)
 
     struct PagedDirectoryEntry *pde = &page_directory[dir_idx];
 
-    if (!pde->present) {
-  100bce:	f6 04 9d 00 60 31 00 	testb  $0x1,0x316000(,%ebx,4)
-  100bd5:	01 
-  100bd6:	75 30                	jne    100c08 <alloc_page+0x5c>
+    if (!pde->present)
+  100be3:	f6 04 9d 00 60 31 00 	testb  $0x1,0x316000(,%ebx,4)
+  100bea:	01 
+  100beb:	75 30                	jne    100c1d <alloc_page+0x60>
+    {
         // 设置PDE指向对应的页表
         pde->table_addr = ((uint32_t)page_table[dir_idx]) >> 12;
-  100bd8:	89 da                	mov    %ebx,%edx
-  100bda:	c1 e2 0c             	shl    $0xc,%edx
-  100bdd:	81 c2 00 60 11 00    	add    $0x116000,%edx
-  100be3:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
-  100be9:	8b 04 9d 00 60 31 00 	mov    0x316000(,%ebx,4),%eax
-  100bf0:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100bf5:	09 d0                	or     %edx,%eax
-  100bf7:	89 04 9d 00 60 31 00 	mov    %eax,0x316000(,%ebx,4)
-        pde->present    = 1;
-        pde->rw         = 1;
-        pde->user       = 1;
-  100bfe:	83 c8 07             	or     $0x7,%eax
-  100c01:	88 04 9d 00 60 31 00 	mov    %al,0x316000(,%ebx,4)
+  100bed:	89 da                	mov    %ebx,%edx
+  100bef:	c1 e2 0c             	shl    $0xc,%edx
+  100bf2:	81 c2 00 60 11 00    	add    $0x116000,%edx
+  100bf8:	81 e2 00 f0 ff ff    	and    $0xfffff000,%edx
+  100bfe:	8b 04 9d 00 60 31 00 	mov    0x316000(,%ebx,4),%eax
+  100c05:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100c0a:	09 d0                	or     %edx,%eax
+  100c0c:	89 04 9d 00 60 31 00 	mov    %eax,0x316000(,%ebx,4)
+        pde->present = 1;
+        pde->rw = 1;
+        pde->user = 1;
+  100c13:	83 c8 07             	or     $0x7,%eax
+  100c16:	88 04 9d 00 60 31 00 	mov    %al,0x316000(,%ebx,4)
     }
 
     struct PageTableEntry *pte = &page_table[dir_idx][table_idx];
-    uint32_t phys_page = alloc_phys_page();  // 新分配一个 4 KB 物理页
-  100c08:	e8 0d ff ff ff       	call   100b1a <alloc_phys_page>
-    
+    uint32_t phys_page = alloc_phys_page(); // 新分配一个 4 KB 物理页
+  100c1d:	e8 09 ff ff ff       	call   100b2b <alloc_phys_page>
+  100c22:	89 c6                	mov    %eax,%esi
+
     // 通过直接映射区域清零物理页
-    //uint32_t virt_addr = 0xC0000000 + phys_page;  // 直接映射虚拟地址
-    //memset((void*)virt_addr, 0, PAGE_SIZE);
+    uint32_t virt_addr = 0xC0000000 + phys_page; // 直接映射虚拟地址
+    memset((void *)virt_addr, 0, PAGE_SIZE);
+  100c24:	83 ec 04             	sub    $0x4,%esp
+  100c27:	68 00 10 00 00       	push   $0x1000
+  100c2c:	6a 00                	push   $0x0
+    uint32_t virt_addr = 0xC0000000 + phys_page; // 直接映射虚拟地址
+  100c2e:	8d 80 00 00 00 c0    	lea    -0x40000000(%eax),%eax
+    memset((void *)virt_addr, 0, PAGE_SIZE);
+  100c34:	50                   	push   %eax
+  100c35:	e8 70 f8 ff ff       	call   1004aa <memset>
 
     pte->frame_addr = phys_page >> 12;
-  100c0d:	c1 e3 0a             	shl    $0xa,%ebx
-  100c10:	8b 4d e4             	mov    -0x1c(%ebp),%ecx
-  100c13:	01 cb                	add    %ecx,%ebx
-  100c15:	25 00 f0 ff ff       	and    $0xfffff000,%eax
-  100c1a:	89 c2                	mov    %eax,%edx
-  100c1c:	8b 04 9d 00 60 11 00 	mov    0x116000(,%ebx,4),%eax
-  100c23:	25 ff 0f 00 00       	and    $0xfff,%eax
-  100c28:	09 d0                	or     %edx,%eax
-  100c2a:	89 04 9d 00 60 11 00 	mov    %eax,0x116000(,%ebx,4)
-    pte->present    = 1;
-  100c31:	83 c8 01             	or     $0x1,%eax
-    pte->rw         = is_write ? 1 : 0;
-  100c34:	83 e7 01             	and    $0x1,%edi
-  100c37:	d1 e7                	shl    $1,%edi
-  100c39:	83 e0 f9             	and    $0xfffffff9,%eax
-    pte->user       = is_user ? 1 : 0;
-  100c3c:	83 e6 01             	and    $0x1,%esi
-  100c3f:	c1 e6 02             	shl    $0x2,%esi
-  100c42:	09 f8                	or     %edi,%eax
-  100c44:	09 f0                	or     %esi,%eax
-  100c46:	88 04 9d 00 60 11 00 	mov    %al,0x116000(,%ebx,4)
+  100c3a:	c1 e3 0a             	shl    $0xa,%ebx
+  100c3d:	8b 45 e4             	mov    -0x1c(%ebp),%eax
+  100c40:	01 c3                	add    %eax,%ebx
+  100c42:	81 e6 00 f0 ff ff    	and    $0xfffff000,%esi
+  100c48:	8b 04 9d 00 60 11 00 	mov    0x116000(,%ebx,4),%eax
+  100c4f:	25 ff 0f 00 00       	and    $0xfff,%eax
+  100c54:	09 c6                	or     %eax,%esi
+  100c56:	89 34 9d 00 60 11 00 	mov    %esi,0x116000(,%ebx,4)
+    pte->present = 1;
+  100c5d:	83 ce 01             	or     $0x1,%esi
+    pte->rw = is_write ? 1 : 0;
+  100c60:	83 e7 01             	and    $0x1,%edi
+  100c63:	d1 e7                	shl    %edi
+  100c65:	83 e6 f9             	and    $0xfffffff9,%esi
+    pte->user = is_user ? 1 : 0;
+  100c68:	8a 55 e0             	mov    -0x20(%ebp),%dl
+  100c6b:	83 e2 01             	and    $0x1,%edx
+  100c6e:	c1 e2 02             	shl    $0x2,%edx
+  100c71:	89 f0                	mov    %esi,%eax
+  100c73:	09 f8                	or     %edi,%eax
+  100c75:	09 d0                	or     %edx,%eax
+  100c77:	88 04 9d 00 60 11 00 	mov    %al,0x116000(,%ebx,4)
+
+    // Invalidate TLB entry for the fault address
+    __asm__ __volatile__("invlpg (%0)" : : "r"(fault_addr));
+  100c7e:	8b 45 08             	mov    0x8(%ebp),%eax
+  100c81:	0f 01 38             	invlpg (%eax)
 }
-  100c4d:	83 c4 1c             	add    $0x1c,%esp
-  100c50:	5b                   	pop    %ebx
-  100c51:	5e                   	pop    %esi
-  100c52:	5f                   	pop    %edi
-  100c53:	5d                   	pop    %ebp
-  100c54:	c3                   	ret
+  100c84:	83 c4 10             	add    $0x10,%esp
+  100c87:	8d 65 f4             	lea    -0xc(%ebp),%esp
+  100c8a:	5b                   	pop    %ebx
+  100c8b:	5e                   	pop    %esi
+  100c8c:	5f                   	pop    %edi
+  100c8d:	5d                   	pop    %ebp
+  100c8e:	c3                   	ret
 
-00100c55 <r_cr2>:
+00100c8f <r_cr2>:
 
-int r_cr2(){
+int r_cr2()
+{
     uint32_t val;
     asm volatile("mov %%cr2, %0" : "=r"(val));
-  100c55:	0f 20 d0             	mov    %cr2,%eax
+  100c8f:	0f 20 d0             	mov    %cr2,%eax
     return val;
 }
-  100c58:	c3                   	ret
+  100c92:	c3                   	ret
 
-00100c59 <page_not_found_handler>:
+00100c93 <page_not_found_handler>:
 
-void page_not_found_handler(uint32_t err) {
-  100c59:	55                   	push   %ebp
-  100c5a:	89 e5                	mov    %esp,%ebp
-  100c5c:	83 ec 0c             	sub    $0xc,%esp
-  100c5f:	8b 45 08             	mov    0x8(%ebp),%eax
+void page_not_found_handler(uint32_t err)
+{
+  100c93:	55                   	push   %ebp
+  100c94:	89 e5                	mov    %esp,%ebp
+  100c96:	83 ec 0c             	sub    $0xc,%esp
+  100c99:	8b 45 08             	mov    0x8(%ebp),%eax
     asm volatile("mov %%cr2, %0" : "=r"(val));
-  100c62:	0f 20 d1             	mov    %cr2,%ecx
+  100c9c:	0f 20 d1             	mov    %cr2,%ecx
     uint32_t fault_addr = r_cr2();
     uint32_t err_code = err;
     bool is_write = err_code & (1 << 1);
-    bool is_user  = err_code & (1 << 2);
-  100c65:	89 c2                	mov    %eax,%edx
-  100c67:	c1 ea 02             	shr    $0x2,%edx
-  100c6a:	83 e2 01             	and    $0x1,%edx
+    bool is_user = err_code & (1 << 2);
+  100c9f:	89 c2                	mov    %eax,%edx
+  100ca1:	c1 ea 02             	shr    $0x2,%edx
+  100ca4:	83 e2 01             	and    $0x1,%edx
 
     alloc_page(fault_addr, is_write, is_user);
-  100c6d:	52                   	push   %edx
+  100ca7:	52                   	push   %edx
     bool is_write = err_code & (1 << 1);
-  100c6e:	d1 e8                	shr    $1,%eax
-  100c70:	83 e0 01             	and    $0x1,%eax
+  100ca8:	d1 e8                	shr    %eax
+  100caa:	83 e0 01             	and    $0x1,%eax
     alloc_page(fault_addr, is_write, is_user);
-  100c73:	50                   	push   %eax
-  100c74:	51                   	push   %ecx
-  100c75:	e8 32 ff ff ff       	call   100bac <alloc_page>
+  100cad:	50                   	push   %eax
+  100cae:	51                   	push   %ecx
+  100caf:	e8 09 ff ff ff       	call   100bbd <alloc_page>
 }
-  100c7a:	83 c4 10             	add    $0x10,%esp
-  100c7d:	c9                   	leave
-  100c7e:	c3                   	ret
+  100cb4:	83 c4 10             	add    $0x10,%esp
+  100cb7:	c9                   	leave
+  100cb8:	c3                   	ret
 
-00100c7f <put_char>:
+00100cb9 <put_char>:
 #include "sbi.h"
 
 static char *video_memory = (char *)0xb8000;
 
 void put_char(char c)
 {
-  100c7f:	55                   	push   %ebp
-  100c80:	89 e5                	mov    %esp,%ebp
-  100c82:	53                   	push   %ebx
-  100c83:	8b 55 08             	mov    0x8(%ebp),%edx
-  100c86:	88 d1                	mov    %dl,%cl
+  100cb9:	55                   	push   %ebp
+  100cba:	89 e5                	mov    %esp,%ebp
+  100cbc:	53                   	push   %ebx
+  100cbd:	8b 55 08             	mov    0x8(%ebp),%edx
+  100cc0:	88 d1                	mov    %dl,%cl
     // 简单的换行处理 logic
     if (c == '\n')
-  100c88:	80 fa 0a             	cmp    $0xa,%dl
-  100c8b:	74 20                	je     100cad <put_char+0x2e>
+  100cc2:	80 fa 0a             	cmp    $0xa,%dl
+  100cc5:	74 20                	je     100ce7 <put_char+0x2e>
         uint32_t next_row_offset = (current_row + 1) * 80 * 2;
         video_memory = (char *)(0xb8000 + next_row_offset);
     }
     else
     {
         *video_memory = c;
-  100c8d:	a1 60 36 10 00       	mov    0x103660,%eax
-  100c92:	88 10                	mov    %dl,(%eax)
+  100cc7:	a1 38 38 10 00       	mov    0x103838,%eax
+  100ccc:	88 10                	mov    %dl,(%eax)
         video_memory++;
         *video_memory = 0x07; // 黑底灰字
-  100c94:	c6 40 01 07          	movb   $0x7,0x1(%eax)
+  100cce:	c6 40 01 07          	movb   $0x7,0x1(%eax)
         video_memory++;
-  100c98:	83 c0 02             	add    $0x2,%eax
+  100cd2:	83 c0 02             	add    $0x2,%eax
         video_memory = (char *)(0xb8000 + next_row_offset);
-  100c9b:	a3 60 36 10 00       	mov    %eax,0x103660
+  100cd5:	a3 38 38 10 00       	mov    %eax,0x103838
     }
 
     // 也写到串口 COM1（0x3F8），便于在 QEMU 中使用 -serial stdio 查看
     unsigned short port = 0x3f8;
     asm volatile("outb %0, %1" ::"a"(c), "Nd"(port));
-  100ca0:	ba f8 03 00 00       	mov    $0x3f8,%edx
-  100ca5:	88 c8                	mov    %cl,%al
-  100ca7:	ee                   	out    %al,(%dx)
+  100cda:	ba f8 03 00 00       	mov    $0x3f8,%edx
+  100cdf:	88 c8                	mov    %cl,%al
+  100ce1:	ee                   	out    %al,(%dx)
 }
-  100ca8:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-  100cab:	c9                   	leave
-  100cac:	c3                   	ret
+  100ce2:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+  100ce5:	c9                   	leave
+  100ce6:	c3                   	ret
         uint32_t current_offset = (uint32_t)(video_memory - 0xb8000);
-  100cad:	a1 60 36 10 00       	mov    0x103660,%eax
-  100cb2:	8d 90 00 80 f4 ff    	lea    -0xb8000(%eax),%edx
+  100ce7:	a1 38 38 10 00       	mov    0x103838,%eax
+  100cec:	8d 90 00 80 f4 ff    	lea    -0xb8000(%eax),%edx
         uint32_t current_row = (current_offset / 2) / 80;
-  100cb8:	bb cd cc cc cc       	mov    $0xcccccccd,%ebx
-  100cbd:	89 d0                	mov    %edx,%eax
-  100cbf:	f7 e3                	mul    %ebx
-  100cc1:	c1 ea 07             	shr    $0x7,%edx
+  100cf2:	bb cd cc cc cc       	mov    $0xcccccccd,%ebx
+  100cf7:	89 d0                	mov    %edx,%eax
+  100cf9:	f7 e3                	mul    %ebx
+  100cfb:	c1 ea 07             	shr    $0x7,%edx
         video_memory = (char *)(0xb8000 + next_row_offset);
-  100cc4:	8d 04 92             	lea    (%edx,%edx,4),%eax
-  100cc7:	c1 e0 05             	shl    $0x5,%eax
-  100cca:	05 a0 80 0b 00       	add    $0xb80a0,%eax
-  100ccf:	eb ca                	jmp    100c9b <put_char+0x1c>
+  100cfe:	8d 04 92             	lea    (%edx,%edx,4),%eax
+  100d01:	c1 e0 05             	shl    $0x5,%eax
+  100d04:	05 a0 80 0b 00       	add    $0xb80a0,%eax
+  100d09:	eb ca                	jmp    100cd5 <put_char+0x1c>
 
-00100cd1 <shutdown>:
+00100d0b <shutdown>:
 
 static inline void outw(uint16_t port, uint16_t value)
 {
     __asm__ volatile("outw %0, %1" : : "a"(value), "Nd"(port));
-  100cd1:	b8 00 20 00 00       	mov    $0x2000,%eax
-  100cd6:	ba 04 06 00 00       	mov    $0x604,%edx
-  100cdb:	66 ef                	out    %ax,(%dx)
+  100d0b:	b8 00 20 00 00       	mov    $0x2000,%eax
+  100d10:	ba 04 06 00 00       	mov    $0x604,%edx
+  100d15:	66 ef                	out    %ax,(%dx)
 
 void shutdown()
 {
     outw(0x604, 0x2000); // QEMU power off
     for (;;)
         __asm__ volatile("hlt");
-  100cdd:	f4                   	hlt
+  100d17:	f4                   	hlt
     for (;;)
-  100cde:	eb fd                	jmp    100cdd <shutdown+0xc>
+  100d18:	eb fd                	jmp    100d17 <shutdown+0xc>
 
-00100ce0 <sys_write>:
-#include "../riscv/syscall_ids.h"
-#include "../../types.h"
+00100d1a <sys_write>:
 #include "../../console.h"
+
+static uint32 heap_end = 0x900000; // 初始堆顶，假设在用户空间
 
 uint32 sys_write(int fd, const char *str, uint32 len)
 {
-  100ce0:	55                   	push   %ebp
-  100ce1:	89 e5                	mov    %esp,%ebp
-  100ce3:	57                   	push   %edi
-  100ce4:	56                   	push   %esi
-  100ce5:	53                   	push   %ebx
-  100ce6:	83 ec 0c             	sub    $0xc,%esp
-  100ce9:	8b 75 0c             	mov    0xc(%ebp),%esi
-  100cec:	8b 7d 10             	mov    0x10(%ebp),%edi
+  100d1a:	55                   	push   %ebp
+  100d1b:	89 e5                	mov    %esp,%ebp
+  100d1d:	57                   	push   %edi
+  100d1e:	56                   	push   %esi
+  100d1f:	53                   	push   %ebx
+  100d20:	83 ec 0c             	sub    $0xc,%esp
+  100d23:	8b 75 0c             	mov    0xc(%ebp),%esi
+  100d26:	8b 7d 10             	mov    0x10(%ebp),%edi
     // fd=1 (stdout) 或 fd=2 (stderr) 都可以输出
     if ((fd != 1 && fd != 2) || str == 0)
-  100cef:	8b 45 08             	mov    0x8(%ebp),%eax
-  100cf2:	48                   	dec    %eax
-  100cf3:	83 f8 01             	cmp    $0x1,%eax
-  100cf6:	77 2a                	ja     100d22 <sys_write+0x42>
-  100cf8:	85 f6                	test   %esi,%esi
-  100cfa:	74 2d                	je     100d29 <sys_write+0x49>
+  100d29:	8b 45 08             	mov    0x8(%ebp),%eax
+  100d2c:	48                   	dec    %eax
+  100d2d:	83 f8 01             	cmp    $0x1,%eax
+  100d30:	77 2a                	ja     100d5c <sys_write+0x42>
+  100d32:	85 f6                	test   %esi,%esi
+  100d34:	74 2d                	je     100d63 <sys_write+0x49>
         return -1;
     for (uint32_t i = 0; i < len; ++i)
-  100cfc:	85 ff                	test   %edi,%edi
-  100cfe:	74 18                	je     100d18 <sys_write+0x38>
-  100d00:	89 f3                	mov    %esi,%ebx
-  100d02:	01 fe                	add    %edi,%esi
+  100d36:	85 ff                	test   %edi,%edi
+  100d38:	74 18                	je     100d52 <sys_write+0x38>
+  100d3a:	89 f3                	mov    %esi,%ebx
+  100d3c:	01 fe                	add    %edi,%esi
         put_char(str[i]);
-  100d04:	83 ec 0c             	sub    $0xc,%esp
-  100d07:	0f be 03             	movsbl (%ebx),%eax
-  100d0a:	50                   	push   %eax
-  100d0b:	e8 6f ff ff ff       	call   100c7f <put_char>
+  100d3e:	83 ec 0c             	sub    $0xc,%esp
+  100d41:	0f be 03             	movsbl (%ebx),%eax
+  100d44:	50                   	push   %eax
+  100d45:	e8 6f ff ff ff       	call   100cb9 <put_char>
     for (uint32_t i = 0; i < len; ++i)
-  100d10:	43                   	inc    %ebx
-  100d11:	83 c4 10             	add    $0x10,%esp
-  100d14:	39 f3                	cmp    %esi,%ebx
-  100d16:	75 ec                	jne    100d04 <sys_write+0x24>
+  100d4a:	43                   	inc    %ebx
+  100d4b:	83 c4 10             	add    $0x10,%esp
+  100d4e:	39 f3                	cmp    %esi,%ebx
+  100d50:	75 ec                	jne    100d3e <sys_write+0x24>
     return len;
 }
-  100d18:	89 f8                	mov    %edi,%eax
-  100d1a:	8d 65 f4             	lea    -0xc(%ebp),%esp
-  100d1d:	5b                   	pop    %ebx
-  100d1e:	5e                   	pop    %esi
-  100d1f:	5f                   	pop    %edi
-  100d20:	5d                   	pop    %ebp
-  100d21:	c3                   	ret
+  100d52:	89 f8                	mov    %edi,%eax
+  100d54:	8d 65 f4             	lea    -0xc(%ebp),%esp
+  100d57:	5b                   	pop    %ebx
+  100d58:	5e                   	pop    %esi
+  100d59:	5f                   	pop    %edi
+  100d5a:	5d                   	pop    %ebp
+  100d5b:	c3                   	ret
         return -1;
-  100d22:	bf ff ff ff ff       	mov    $0xffffffff,%edi
-  100d27:	eb ef                	jmp    100d18 <sys_write+0x38>
-  100d29:	bf ff ff ff ff       	mov    $0xffffffff,%edi
-  100d2e:	eb e8                	jmp    100d18 <sys_write+0x38>
+  100d5c:	bf ff ff ff ff       	mov    $0xffffffff,%edi
+  100d61:	eb ef                	jmp    100d52 <sys_write+0x38>
+  100d63:	bf ff ff ff ff       	mov    $0xffffffff,%edi
+  100d68:	eb e8                	jmp    100d52 <sys_write+0x38>
 
-00100d30 <sys_exit>:
+00100d6a <sys_exit>:
 
 __attribute__((noreturn)) void sys_exit(int code)
 {
-  100d30:	55                   	push   %ebp
-  100d31:	89 e5                	mov    %esp,%ebp
-  100d33:	83 ec 08             	sub    $0x8,%esp
+  100d6a:	55                   	push   %ebp
+  100d6b:	89 e5                	mov    %esp,%ebp
+  100d6d:	83 ec 08             	sub    $0x8,%esp
     shutdown();
-  100d36:	e8 96 ff ff ff       	call   100cd1 <shutdown>
+  100d70:	e8 96 ff ff ff       	call   100d0b <shutdown>
 
-00100d3b <syscall>:
+00100d75 <sys_sbrk>:
     __builtin_unreachable();
 }
 
+uint32 sys_sbrk(int increment)
+{
+  100d75:	55                   	push   %ebp
+  100d76:	89 e5                	mov    %esp,%ebp
+    uint32 old_heap = heap_end;
+  100d78:	a1 3c 38 10 00       	mov    0x10383c,%eax
+    heap_end += increment;
+  100d7d:	89 c2                	mov    %eax,%edx
+  100d7f:	03 55 08             	add    0x8(%ebp),%edx
+  100d82:	89 15 3c 38 10 00    	mov    %edx,0x10383c
+    // 这里可以添加页面分配逻辑，如果需要
+    return old_heap;
+}
+  100d88:	5d                   	pop    %ebp
+  100d89:	c3                   	ret
+
+00100d8a <syscall>:
+
 void syscall(struct trapframe *tf)
 {
-  100d3b:	55                   	push   %ebp
-  100d3c:	89 e5                	mov    %esp,%ebp
-  100d3e:	56                   	push   %esi
-  100d3f:	53                   	push   %ebx
-  100d40:	8b 5d 08             	mov    0x8(%ebp),%ebx
+  100d8a:	55                   	push   %ebp
+  100d8b:	89 e5                	mov    %esp,%ebp
+  100d8d:	56                   	push   %esi
+  100d8e:	53                   	push   %ebx
+  100d8f:	8b 5d 08             	mov    0x8(%ebp),%ebx
     if (!tf)
-  100d43:	85 db                	test   %ebx,%ebx
-  100d45:	74 22                	je     100d69 <syscall+0x2e>
+  100d92:	85 db                	test   %ebx,%ebx
+  100d94:	74 2c                	je     100dc2 <syscall+0x38>
         return;
     int id = tf->eax;
-  100d47:	8b 43 1c             	mov    0x1c(%ebx),%eax
+  100d96:	8b 43 1c             	mov    0x1c(%ebx),%eax
     int ret = -1;
     uint32 args[6] = {tf->ebx, tf->ecx, tf->edx, tf->esi, tf->edi, tf->ebp};
-  100d4a:	8b 53 10             	mov    0x10(%ebx),%edx
-  100d4d:	8b 4b 18             	mov    0x18(%ebx),%ecx
-  100d50:	8b 73 14             	mov    0x14(%ebx),%esi
+  100d99:	8b 53 10             	mov    0x10(%ebx),%edx
+  100d9c:	8b 4b 18             	mov    0x18(%ebx),%ecx
+  100d9f:	8b 73 14             	mov    0x14(%ebx),%esi
     __attribute__((unused)) uint32 eip = stack[0];
     __attribute__((unused)) uint32 cs = stack[1];
     __attribute__((unused)) uint32 eflags = stack[2];
     __attribute__((unused)) uint32 user_esp = stack[3];
     __attribute__((unused)) uint32 user_ss = stack[4];
     switch (id)
-  100d53:	83 f8 40             	cmp    $0x40,%eax
-  100d56:	75 18                	jne    100d70 <syscall+0x35>
+  100da2:	83 f8 5d             	cmp    $0x5d,%eax
+  100da5:	74 22                	je     100dc9 <syscall+0x3f>
+  100da7:	83 f8 5e             	cmp    $0x5e,%eax
+  100daa:	74 22                	je     100dce <syscall+0x44>
+  100dac:	83 f8 40             	cmp    $0x40,%eax
+  100daf:	75 2c                	jne    100ddd <syscall+0x53>
     {
     case SYS_write:
         ret = sys_write(args[0], (const char *)args[1], args[2]);
-  100d58:	83 ec 04             	sub    $0x4,%esp
-  100d5b:	56                   	push   %esi
-  100d5c:	51                   	push   %ecx
-  100d5d:	52                   	push   %edx
-  100d5e:	e8 7d ff ff ff       	call   100ce0 <sys_write>
+  100db1:	83 ec 04             	sub    $0x4,%esp
+  100db4:	56                   	push   %esi
+  100db5:	51                   	push   %ecx
+  100db6:	52                   	push   %edx
+  100db7:	e8 5e ff ff ff       	call   100d1a <sys_write>
+        break;
+  100dbc:	83 c4 10             	add    $0x10,%esp
     default:
         printf("unknown interrupt or exception");
         sys_exit(args[0]);
         break;
     }
     tf->eax = ret;
-  100d63:	89 43 1c             	mov    %eax,0x1c(%ebx)
-  100d66:	83 c4 10             	add    $0x10,%esp
+  100dbf:	89 43 1c             	mov    %eax,0x1c(%ebx)
 }
-  100d69:	8d 65 f8             	lea    -0x8(%ebp),%esp
-  100d6c:	5b                   	pop    %ebx
-  100d6d:	5e                   	pop    %esi
-  100d6e:	5d                   	pop    %ebp
-  100d6f:	c3                   	ret
-    switch (id)
-  100d70:	83 f8 5d             	cmp    $0x5d,%eax
-  100d73:	74 12                	je     100d87 <syscall+0x4c>
-        printf("unknown interrupt or exception");
-  100d75:	83 ec 0c             	sub    $0xc,%esp
-  100d78:	68 90 21 10 00       	push   $0x102190
-  100d7d:	e8 b5 f6 ff ff       	call   100437 <printf>
+  100dc2:	8d 65 f8             	lea    -0x8(%ebp),%esp
+  100dc5:	5b                   	pop    %ebx
+  100dc6:	5e                   	pop    %esi
+  100dc7:	5d                   	pop    %ebp
+  100dc8:	c3                   	ret
     shutdown();
-  100d82:	e8 4a ff ff ff       	call   100cd1 <shutdown>
-  100d87:	e8 45 ff ff ff       	call   100cd1 <shutdown>
+  100dc9:	e8 3d ff ff ff       	call   100d0b <shutdown>
+    uint32 old_heap = heap_end;
+  100dce:	a1 3c 38 10 00       	mov    0x10383c,%eax
+    heap_end += increment;
+  100dd3:	01 c2                	add    %eax,%edx
+  100dd5:	89 15 3c 38 10 00    	mov    %edx,0x10383c
+        break;
+  100ddb:	eb e2                	jmp    100dbf <syscall+0x35>
+        printf("unknown interrupt or exception");
+  100ddd:	83 ec 0c             	sub    $0xc,%esp
+  100de0:	68 74 21 10 00       	push   $0x102174
+  100de5:	e8 4d f6 ff ff       	call   100437 <printf>
+    shutdown();
+  100dea:	e8 1c ff ff ff       	call   100d0b <shutdown>
 
-00100d8c <idt_init>:
+00100def <idt_init>:
 
 __attribute__((aligned(4096))) char trap_page[0x1000];
 __attribute__((aligned(4096))) char user_stack_top[0x1000];
 
 void idt_init(void)
 {
-  100d8c:	55                   	push   %ebp
-  100d8d:	89 e5                	mov    %esp,%ebp
-  100d8f:	83 ec 0c             	sub    $0xc,%esp
+  100def:	55                   	push   %ebp
+  100df0:	89 e5                	mov    %esp,%ebp
+  100df2:	83 ec 0c             	sub    $0xc,%esp
     memset(idt, 0, sizeof(idt));
-  100d92:	68 00 08 00 00       	push   $0x800
-  100d97:	6a 00                	push   $0x0
-  100d99:	68 00 41 11 00       	push   $0x114100
-  100d9e:	e8 07 f7 ff ff       	call   1004aa <memset>
+  100df5:	68 00 08 00 00       	push   $0x800
+  100dfa:	6a 00                	push   $0x0
+  100dfc:	68 00 41 11 00       	push   $0x114100
+  100e01:	e8 a4 f6 ff ff       	call   1004aa <memset>
 
     set_idt_gate(0x80, trap_entry_0x80, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100da3:	68 ee 00 00 00       	push   $0xee
-  100da8:	6a 08                	push   $0x8
-  100daa:	68 52 07 10 00       	push   $0x100752
-  100daf:	68 80 00 00 00       	push   $0x80
-  100db4:	e8 17 fb ff ff       	call   1008d0 <set_idt_gate>
+  100e06:	68 ee 00 00 00       	push   $0xee
+  100e0b:	6a 08                	push   $0x8
+  100e0d:	68 63 07 10 00       	push   $0x100763
+  100e12:	68 80 00 00 00       	push   $0x80
+  100e17:	e8 c5 fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(0, trap_entry_0, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100db9:	83 c4 20             	add    $0x20,%esp
-  100dbc:	68 ee 00 00 00       	push   $0xee
-  100dc1:	6a 08                	push   $0x8
-  100dc3:	68 5e 06 10 00       	push   $0x10065e
-  100dc8:	6a 00                	push   $0x0
-  100dca:	e8 01 fb ff ff       	call   1008d0 <set_idt_gate>
+  100e1c:	83 c4 20             	add    $0x20,%esp
+  100e1f:	68 ee 00 00 00       	push   $0xee
+  100e24:	6a 08                	push   $0x8
+  100e26:	68 69 06 10 00       	push   $0x100669
+  100e2b:	6a 00                	push   $0x0
+  100e2d:	e8 af fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(1, trap_entry_1, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100dcf:	68 ee 00 00 00       	push   $0xee
-  100dd4:	6a 08                	push   $0x8
-  100dd6:	68 64 06 10 00       	push   $0x100664
-  100ddb:	6a 01                	push   $0x1
-  100ddd:	e8 ee fa ff ff       	call   1008d0 <set_idt_gate>
+  100e32:	68 ee 00 00 00       	push   $0xee
+  100e37:	6a 08                	push   $0x8
+  100e39:	68 6f 06 10 00       	push   $0x10066f
+  100e3e:	6a 01                	push   $0x1
+  100e40:	e8 9c fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(2, trap_entry_2, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100de2:	83 c4 20             	add    $0x20,%esp
-  100de5:	68 ee 00 00 00       	push   $0xee
-  100dea:	6a 08                	push   $0x8
-  100dec:	68 6a 06 10 00       	push   $0x10066a
-  100df1:	6a 02                	push   $0x2
-  100df3:	e8 d8 fa ff ff       	call   1008d0 <set_idt_gate>
+  100e45:	83 c4 20             	add    $0x20,%esp
+  100e48:	68 ee 00 00 00       	push   $0xee
+  100e4d:	6a 08                	push   $0x8
+  100e4f:	68 75 06 10 00       	push   $0x100675
+  100e54:	6a 02                	push   $0x2
+  100e56:	e8 86 fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(3, trap_entry_3, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100df8:	68 ee 00 00 00       	push   $0xee
-  100dfd:	6a 08                	push   $0x8
-  100dff:	68 70 06 10 00       	push   $0x100670
-  100e04:	6a 03                	push   $0x3
-  100e06:	e8 c5 fa ff ff       	call   1008d0 <set_idt_gate>
+  100e5b:	68 ee 00 00 00       	push   $0xee
+  100e60:	6a 08                	push   $0x8
+  100e62:	68 7b 06 10 00       	push   $0x10067b
+  100e67:	6a 03                	push   $0x3
+  100e69:	e8 73 fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(4, trap_entry_4, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e0b:	83 c4 20             	add    $0x20,%esp
-  100e0e:	68 ee 00 00 00       	push   $0xee
-  100e13:	6a 08                	push   $0x8
-  100e15:	68 76 06 10 00       	push   $0x100676
-  100e1a:	6a 04                	push   $0x4
-  100e1c:	e8 af fa ff ff       	call   1008d0 <set_idt_gate>
+  100e6e:	83 c4 20             	add    $0x20,%esp
+  100e71:	68 ee 00 00 00       	push   $0xee
+  100e76:	6a 08                	push   $0x8
+  100e78:	68 81 06 10 00       	push   $0x100681
+  100e7d:	6a 04                	push   $0x4
+  100e7f:	e8 5d fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(5, trap_entry_5, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e21:	68 ee 00 00 00       	push   $0xee
-  100e26:	6a 08                	push   $0x8
-  100e28:	68 7c 06 10 00       	push   $0x10067c
-  100e2d:	6a 05                	push   $0x5
-  100e2f:	e8 9c fa ff ff       	call   1008d0 <set_idt_gate>
+  100e84:	68 ee 00 00 00       	push   $0xee
+  100e89:	6a 08                	push   $0x8
+  100e8b:	68 87 06 10 00       	push   $0x100687
+  100e90:	6a 05                	push   $0x5
+  100e92:	e8 4a fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(6, trap_entry_6, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e34:	83 c4 20             	add    $0x20,%esp
-  100e37:	68 ee 00 00 00       	push   $0xee
-  100e3c:	6a 08                	push   $0x8
-  100e3e:	68 82 06 10 00       	push   $0x100682
-  100e43:	6a 06                	push   $0x6
-  100e45:	e8 86 fa ff ff       	call   1008d0 <set_idt_gate>
+  100e97:	83 c4 20             	add    $0x20,%esp
+  100e9a:	68 ee 00 00 00       	push   $0xee
+  100e9f:	6a 08                	push   $0x8
+  100ea1:	68 8d 06 10 00       	push   $0x10068d
+  100ea6:	6a 06                	push   $0x6
+  100ea8:	e8 34 fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(7, trap_entry_7, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e4a:	68 ee 00 00 00       	push   $0xee
-  100e4f:	6a 08                	push   $0x8
-  100e51:	68 88 06 10 00       	push   $0x100688
-  100e56:	6a 07                	push   $0x7
-  100e58:	e8 73 fa ff ff       	call   1008d0 <set_idt_gate>
+  100ead:	68 ee 00 00 00       	push   $0xee
+  100eb2:	6a 08                	push   $0x8
+  100eb4:	68 93 06 10 00       	push   $0x100693
+  100eb9:	6a 07                	push   $0x7
+  100ebb:	e8 21 fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(8, trap_entry_8, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e5d:	83 c4 20             	add    $0x20,%esp
-  100e60:	68 ee 00 00 00       	push   $0xee
-  100e65:	6a 08                	push   $0x8
-  100e67:	68 8e 06 10 00       	push   $0x10068e
-  100e6c:	6a 08                	push   $0x8
-  100e6e:	e8 5d fa ff ff       	call   1008d0 <set_idt_gate>
+  100ec0:	83 c4 20             	add    $0x20,%esp
+  100ec3:	68 ee 00 00 00       	push   $0xee
+  100ec8:	6a 08                	push   $0x8
+  100eca:	68 99 06 10 00       	push   $0x100699
+  100ecf:	6a 08                	push   $0x8
+  100ed1:	e8 0b fa ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(9, trap_entry_9, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e73:	68 ee 00 00 00       	push   $0xee
-  100e78:	6a 08                	push   $0x8
-  100e7a:	68 94 06 10 00       	push   $0x100694
-  100e7f:	6a 09                	push   $0x9
-  100e81:	e8 4a fa ff ff       	call   1008d0 <set_idt_gate>
+  100ed6:	68 ee 00 00 00       	push   $0xee
+  100edb:	6a 08                	push   $0x8
+  100edd:	68 9f 06 10 00       	push   $0x10069f
+  100ee2:	6a 09                	push   $0x9
+  100ee4:	e8 f8 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(10, trap_entry_10, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e86:	83 c4 20             	add    $0x20,%esp
-  100e89:	68 ee 00 00 00       	push   $0xee
-  100e8e:	6a 08                	push   $0x8
-  100e90:	68 9a 06 10 00       	push   $0x10069a
-  100e95:	6a 0a                	push   $0xa
-  100e97:	e8 34 fa ff ff       	call   1008d0 <set_idt_gate>
+  100ee9:	83 c4 20             	add    $0x20,%esp
+  100eec:	68 ee 00 00 00       	push   $0xee
+  100ef1:	6a 08                	push   $0x8
+  100ef3:	68 a5 06 10 00       	push   $0x1006a5
+  100ef8:	6a 0a                	push   $0xa
+  100efa:	e8 e2 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(11, trap_entry_11, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100e9c:	68 ee 00 00 00       	push   $0xee
-  100ea1:	6a 08                	push   $0x8
-  100ea3:	68 a0 06 10 00       	push   $0x1006a0
-  100ea8:	6a 0b                	push   $0xb
-  100eaa:	e8 21 fa ff ff       	call   1008d0 <set_idt_gate>
+  100eff:	68 ee 00 00 00       	push   $0xee
+  100f04:	6a 08                	push   $0x8
+  100f06:	68 ab 06 10 00       	push   $0x1006ab
+  100f0b:	6a 0b                	push   $0xb
+  100f0d:	e8 cf f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(12, trap_entry_12, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100eaf:	83 c4 20             	add    $0x20,%esp
-  100eb2:	68 ee 00 00 00       	push   $0xee
-  100eb7:	6a 08                	push   $0x8
-  100eb9:	68 a6 06 10 00       	push   $0x1006a6
-  100ebe:	6a 0c                	push   $0xc
-  100ec0:	e8 0b fa ff ff       	call   1008d0 <set_idt_gate>
+  100f12:	83 c4 20             	add    $0x20,%esp
+  100f15:	68 ee 00 00 00       	push   $0xee
+  100f1a:	6a 08                	push   $0x8
+  100f1c:	68 b1 06 10 00       	push   $0x1006b1
+  100f21:	6a 0c                	push   $0xc
+  100f23:	e8 b9 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(13, trap_entry_13, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100ec5:	68 ee 00 00 00       	push   $0xee
-  100eca:	6a 08                	push   $0x8
-  100ecc:	68 ac 06 10 00       	push   $0x1006ac
-  100ed1:	6a 0d                	push   $0xd
-  100ed3:	e8 f8 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f28:	68 ee 00 00 00       	push   $0xee
+  100f2d:	6a 08                	push   $0x8
+  100f2f:	68 ba 06 10 00       	push   $0x1006ba
+  100f34:	6a 0d                	push   $0xd
+  100f36:	e8 a6 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(14, trap_entry_14, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100ed8:	83 c4 20             	add    $0x20,%esp
-  100edb:	68 ee 00 00 00       	push   $0xee
-  100ee0:	6a 08                	push   $0x8
-  100ee2:	68 b2 06 10 00       	push   $0x1006b2
-  100ee7:	6a 0e                	push   $0xe
-  100ee9:	e8 e2 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f3b:	83 c4 20             	add    $0x20,%esp
+  100f3e:	68 ee 00 00 00       	push   $0xee
+  100f43:	6a 08                	push   $0x8
+  100f45:	68 c3 06 10 00       	push   $0x1006c3
+  100f4a:	6a 0e                	push   $0xe
+  100f4c:	e8 90 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(15, trap_entry_15, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100eee:	68 ee 00 00 00       	push   $0xee
-  100ef3:	6a 08                	push   $0x8
-  100ef5:	68 b9 06 10 00       	push   $0x1006b9
-  100efa:	6a 0f                	push   $0xf
-  100efc:	e8 cf f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f51:	68 ee 00 00 00       	push   $0xee
+  100f56:	6a 08                	push   $0x8
+  100f58:	68 ca 06 10 00       	push   $0x1006ca
+  100f5d:	6a 0f                	push   $0xf
+  100f5f:	e8 7d f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(16, trap_entry_16, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f01:	83 c4 20             	add    $0x20,%esp
-  100f04:	68 ee 00 00 00       	push   $0xee
-  100f09:	6a 08                	push   $0x8
-  100f0b:	68 c2 06 10 00       	push   $0x1006c2
-  100f10:	6a 10                	push   $0x10
-  100f12:	e8 b9 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f64:	83 c4 20             	add    $0x20,%esp
+  100f67:	68 ee 00 00 00       	push   $0xee
+  100f6c:	6a 08                	push   $0x8
+  100f6e:	68 d3 06 10 00       	push   $0x1006d3
+  100f73:	6a 10                	push   $0x10
+  100f75:	e8 67 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(17, trap_entry_17, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f17:	68 ee 00 00 00       	push   $0xee
-  100f1c:	6a 08                	push   $0x8
-  100f1e:	68 cb 06 10 00       	push   $0x1006cb
-  100f23:	6a 11                	push   $0x11
-  100f25:	e8 a6 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f7a:	68 ee 00 00 00       	push   $0xee
+  100f7f:	6a 08                	push   $0x8
+  100f81:	68 dc 06 10 00       	push   $0x1006dc
+  100f86:	6a 11                	push   $0x11
+  100f88:	e8 54 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(18, trap_entry_18, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f2a:	83 c4 20             	add    $0x20,%esp
-  100f2d:	68 ee 00 00 00       	push   $0xee
-  100f32:	6a 08                	push   $0x8
-  100f34:	68 d4 06 10 00       	push   $0x1006d4
-  100f39:	6a 12                	push   $0x12
-  100f3b:	e8 90 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100f8d:	83 c4 20             	add    $0x20,%esp
+  100f90:	68 ee 00 00 00       	push   $0xee
+  100f95:	6a 08                	push   $0x8
+  100f97:	68 e5 06 10 00       	push   $0x1006e5
+  100f9c:	6a 12                	push   $0x12
+  100f9e:	e8 3e f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(19, trap_entry_19, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f40:	68 ee 00 00 00       	push   $0xee
-  100f45:	6a 08                	push   $0x8
-  100f47:	68 dd 06 10 00       	push   $0x1006dd
-  100f4c:	6a 13                	push   $0x13
-  100f4e:	e8 7d f9 ff ff       	call   1008d0 <set_idt_gate>
+  100fa3:	68 ee 00 00 00       	push   $0xee
+  100fa8:	6a 08                	push   $0x8
+  100faa:	68 ee 06 10 00       	push   $0x1006ee
+  100faf:	6a 13                	push   $0x13
+  100fb1:	e8 2b f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(20, trap_entry_20, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f53:	83 c4 20             	add    $0x20,%esp
-  100f56:	68 ee 00 00 00       	push   $0xee
-  100f5b:	6a 08                	push   $0x8
-  100f5d:	68 e6 06 10 00       	push   $0x1006e6
-  100f62:	6a 14                	push   $0x14
-  100f64:	e8 67 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100fb6:	83 c4 20             	add    $0x20,%esp
+  100fb9:	68 ee 00 00 00       	push   $0xee
+  100fbe:	6a 08                	push   $0x8
+  100fc0:	68 f7 06 10 00       	push   $0x1006f7
+  100fc5:	6a 14                	push   $0x14
+  100fc7:	e8 15 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(21, trap_entry_21, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f69:	68 ee 00 00 00       	push   $0xee
-  100f6e:	6a 08                	push   $0x8
-  100f70:	68 ef 06 10 00       	push   $0x1006ef
-  100f75:	6a 15                	push   $0x15
-  100f77:	e8 54 f9 ff ff       	call   1008d0 <set_idt_gate>
+  100fcc:	68 ee 00 00 00       	push   $0xee
+  100fd1:	6a 08                	push   $0x8
+  100fd3:	68 00 07 10 00       	push   $0x100700
+  100fd8:	6a 15                	push   $0x15
+  100fda:	e8 02 f9 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(22, trap_entry_22, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f7c:	83 c4 20             	add    $0x20,%esp
-  100f7f:	68 ee 00 00 00       	push   $0xee
-  100f84:	6a 08                	push   $0x8
-  100f86:	68 f8 06 10 00       	push   $0x1006f8
-  100f8b:	6a 16                	push   $0x16
-  100f8d:	e8 3e f9 ff ff       	call   1008d0 <set_idt_gate>
+  100fdf:	83 c4 20             	add    $0x20,%esp
+  100fe2:	68 ee 00 00 00       	push   $0xee
+  100fe7:	6a 08                	push   $0x8
+  100fe9:	68 09 07 10 00       	push   $0x100709
+  100fee:	6a 16                	push   $0x16
+  100ff0:	e8 ec f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(23, trap_entry_23, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100f92:	68 ee 00 00 00       	push   $0xee
-  100f97:	6a 08                	push   $0x8
-  100f99:	68 01 07 10 00       	push   $0x100701
-  100f9e:	6a 17                	push   $0x17
-  100fa0:	e8 2b f9 ff ff       	call   1008d0 <set_idt_gate>
+  100ff5:	68 ee 00 00 00       	push   $0xee
+  100ffa:	6a 08                	push   $0x8
+  100ffc:	68 12 07 10 00       	push   $0x100712
+  101001:	6a 17                	push   $0x17
+  101003:	e8 d9 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(24, trap_entry_24, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100fa5:	83 c4 20             	add    $0x20,%esp
-  100fa8:	68 ee 00 00 00       	push   $0xee
-  100fad:	6a 08                	push   $0x8
-  100faf:	68 0a 07 10 00       	push   $0x10070a
-  100fb4:	6a 18                	push   $0x18
-  100fb6:	e8 15 f9 ff ff       	call   1008d0 <set_idt_gate>
+  101008:	83 c4 20             	add    $0x20,%esp
+  10100b:	68 ee 00 00 00       	push   $0xee
+  101010:	6a 08                	push   $0x8
+  101012:	68 1b 07 10 00       	push   $0x10071b
+  101017:	6a 18                	push   $0x18
+  101019:	e8 c3 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(25, trap_entry_25, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100fbb:	68 ee 00 00 00       	push   $0xee
-  100fc0:	6a 08                	push   $0x8
-  100fc2:	68 13 07 10 00       	push   $0x100713
-  100fc7:	6a 19                	push   $0x19
-  100fc9:	e8 02 f9 ff ff       	call   1008d0 <set_idt_gate>
+  10101e:	68 ee 00 00 00       	push   $0xee
+  101023:	6a 08                	push   $0x8
+  101025:	68 24 07 10 00       	push   $0x100724
+  10102a:	6a 19                	push   $0x19
+  10102c:	e8 b0 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(26, trap_entry_26, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100fce:	83 c4 20             	add    $0x20,%esp
-  100fd1:	68 ee 00 00 00       	push   $0xee
-  100fd6:	6a 08                	push   $0x8
-  100fd8:	68 1c 07 10 00       	push   $0x10071c
-  100fdd:	6a 1a                	push   $0x1a
-  100fdf:	e8 ec f8 ff ff       	call   1008d0 <set_idt_gate>
+  101031:	83 c4 20             	add    $0x20,%esp
+  101034:	68 ee 00 00 00       	push   $0xee
+  101039:	6a 08                	push   $0x8
+  10103b:	68 2d 07 10 00       	push   $0x10072d
+  101040:	6a 1a                	push   $0x1a
+  101042:	e8 9a f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(27, trap_entry_27, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100fe4:	68 ee 00 00 00       	push   $0xee
-  100fe9:	6a 08                	push   $0x8
-  100feb:	68 25 07 10 00       	push   $0x100725
-  100ff0:	6a 1b                	push   $0x1b
-  100ff2:	e8 d9 f8 ff ff       	call   1008d0 <set_idt_gate>
+  101047:	68 ee 00 00 00       	push   $0xee
+  10104c:	6a 08                	push   $0x8
+  10104e:	68 36 07 10 00       	push   $0x100736
+  101053:	6a 1b                	push   $0x1b
+  101055:	e8 87 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(28, trap_entry_28, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  100ff7:	83 c4 20             	add    $0x20,%esp
-  100ffa:	68 ee 00 00 00       	push   $0xee
-  100fff:	6a 08                	push   $0x8
-  101001:	68 2e 07 10 00       	push   $0x10072e
-  101006:	6a 1c                	push   $0x1c
-  101008:	e8 c3 f8 ff ff       	call   1008d0 <set_idt_gate>
+  10105a:	83 c4 20             	add    $0x20,%esp
+  10105d:	68 ee 00 00 00       	push   $0xee
+  101062:	6a 08                	push   $0x8
+  101064:	68 3f 07 10 00       	push   $0x10073f
+  101069:	6a 1c                	push   $0x1c
+  10106b:	e8 71 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(29, trap_entry_29, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  10100d:	68 ee 00 00 00       	push   $0xee
-  101012:	6a 08                	push   $0x8
-  101014:	68 37 07 10 00       	push   $0x100737
-  101019:	6a 1d                	push   $0x1d
-  10101b:	e8 b0 f8 ff ff       	call   1008d0 <set_idt_gate>
+  101070:	68 ee 00 00 00       	push   $0xee
+  101075:	6a 08                	push   $0x8
+  101077:	68 48 07 10 00       	push   $0x100748
+  10107c:	6a 1d                	push   $0x1d
+  10107e:	e8 5e f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(30, trap_entry_30, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  101020:	83 c4 20             	add    $0x20,%esp
-  101023:	68 ee 00 00 00       	push   $0xee
-  101028:	6a 08                	push   $0x8
-  10102a:	68 40 07 10 00       	push   $0x100740
-  10102f:	6a 1e                	push   $0x1e
-  101031:	e8 9a f8 ff ff       	call   1008d0 <set_idt_gate>
+  101083:	83 c4 20             	add    $0x20,%esp
+  101086:	68 ee 00 00 00       	push   $0xee
+  10108b:	6a 08                	push   $0x8
+  10108d:	68 51 07 10 00       	push   $0x100751
+  101092:	6a 1e                	push   $0x1e
+  101094:	e8 48 f8 ff ff       	call   1008e1 <set_idt_gate>
     set_idt_gate(31, trap_entry_31, 0x08, IDT_PRESENT | IDT_INT_GATE | IDT_RING3);
-  101036:	68 ee 00 00 00       	push   $0xee
-  10103b:	6a 08                	push   $0x8
-  10103d:	68 49 07 10 00       	push   $0x100749
-  101042:	6a 1f                	push   $0x1f
-  101044:	e8 87 f8 ff ff       	call   1008d0 <set_idt_gate>
+  101099:	68 ee 00 00 00       	push   $0xee
+  10109e:	6a 08                	push   $0x8
+  1010a0:	68 5a 07 10 00       	push   $0x10075a
+  1010a5:	6a 1f                	push   $0x1f
+  1010a7:	e8 35 f8 ff ff       	call   1008e1 <set_idt_gate>
 
     idt_load();
-  101049:	83 c4 20             	add    $0x20,%esp
-  10104c:	e8 ba f8 ff ff       	call   10090b <idt_load>
+  1010ac:	83 c4 20             	add    $0x20,%esp
+  1010af:	e8 68 f8 ff ff       	call   10091c <idt_load>
 }
-  101051:	c9                   	leave
-  101052:	c3                   	ret
+  1010b4:	c9                   	leave
+  1010b5:	c3                   	ret
 
-00101053 <trap_init>:
+001010b6 <trap_init>:
 
 void trap_init()
 {
-  101053:	55                   	push   %ebp
-  101054:	89 e5                	mov    %esp,%ebp
-  101056:	83 ec 08             	sub    $0x8,%esp
+  1010b6:	55                   	push   %ebp
+  1010b7:	89 e5                	mov    %esp,%ebp
+  1010b9:	83 ec 08             	sub    $0x8,%esp
     idt_init();
-  101059:	e8 2e fd ff ff       	call   100d8c <idt_init>
+  1010bc:	e8 2e fd ff ff       	call   100def <idt_init>
 
     asm volatile("sti");
-  10105e:	fb                   	sti
+  1010c1:	fb                   	sti
 }
-  10105f:	c9                   	leave
-  101060:	c3                   	ret
+  1010c2:	c9                   	leave
+  1010c3:	c3                   	ret
 
-00101061 <trap_handler>:
+001010c4 <trap_handler>:
 
 void trap_handler(struct trapframe *tf)
 {
-  101061:	55                   	push   %ebp
-  101062:	89 e5                	mov    %esp,%ebp
-  101064:	53                   	push   %ebx
-  101065:	83 ec 04             	sub    $0x4,%esp
-  101068:	8b 5d 08             	mov    0x8(%ebp),%ebx
+  1010c4:	55                   	push   %ebp
+  1010c5:	89 e5                	mov    %esp,%ebp
+  1010c7:	53                   	push   %ebx
+  1010c8:	83 ec 04             	sub    $0x4,%esp
+  1010cb:	8b 5d 08             	mov    0x8(%ebp),%ebx
     if (!tf)
-  10106b:	85 db                	test   %ebx,%ebx
-  10106d:	74 60                	je     1010cf <trap_handler+0x6e>
+  1010ce:	85 db                	test   %ebx,%ebx
+  1010d0:	74 60                	je     101132 <trap_handler+0x6e>
         return;
 
-    switch(tf->trapno)
-  10106f:	8b 43 30             	mov    0x30(%ebx),%eax
-  101072:	83 f8 0e             	cmp    $0xe,%eax
-  101075:	74 24                	je     10109b <trap_handler+0x3a>
-  101077:	3d 80 00 00 00       	cmp    $0x80,%eax
-  10107c:	74 45                	je     1010c3 <trap_handler+0x62>
-  10107e:	83 f8 0d             	cmp    $0xd,%eax
-  101081:	74 28                	je     1010ab <trap_handler+0x4a>
-            return;
-        default:
-            break;
+    switch (tf->trapno)
+  1010d2:	8b 43 30             	mov    0x30(%ebx),%eax
+  1010d5:	83 f8 0e             	cmp    $0xe,%eax
+  1010d8:	74 24                	je     1010fe <trap_handler+0x3a>
+  1010da:	3d 80 00 00 00       	cmp    $0x80,%eax
+  1010df:	74 45                	je     101126 <trap_handler+0x62>
+  1010e1:	83 f8 0d             	cmp    $0xd,%eax
+  1010e4:	74 28                	je     10110e <trap_handler+0x4a>
+        return;
+    default:
+        break;
     }
 
     printf("CPU Exception %d occurred!\n", tf->trapno);
-  101083:	83 ec 08             	sub    $0x8,%esp
-  101086:	50                   	push   %eax
-  101087:	68 69 20 10 00       	push   $0x102069
-  10108c:	e8 a6 f3 ff ff       	call   100437 <printf>
+  1010e6:	83 ec 08             	sub    $0x8,%esp
+  1010e9:	50                   	push   %eax
+  1010ea:	68 bb 21 10 00       	push   $0x1021bb
+  1010ef:	e8 43 f3 ff ff       	call   100437 <printf>
     shutdown();
-  101091:	e8 3b fc ff ff       	call   100cd1 <shutdown>
+  1010f4:	e8 12 fc ff ff       	call   100d0b <shutdown>
 
     return;
-  101096:	83 c4 10             	add    $0x10,%esp
-  101099:	eb 34                	jmp    1010cf <trap_handler+0x6e>
-            page_not_found_handler(tf->err);
-  10109b:	83 ec 0c             	sub    $0xc,%esp
-  10109e:	ff 73 34             	push   0x34(%ebx)
-  1010a1:	e8 b3 fb ff ff       	call   100c59 <page_not_found_handler>
-            return;
-  1010a6:	83 c4 10             	add    $0x10,%esp
-  1010a9:	eb 24                	jmp    1010cf <trap_handler+0x6e>
-            printf("General Protection Fault at EIP: 0x%x\n", tf->eip);
-  1010ab:	83 ec 08             	sub    $0x8,%esp
-  1010ae:	ff 73 38             	push   0x38(%ebx)
-  1010b1:	68 b0 21 10 00       	push   $0x1021b0
-  1010b6:	e8 7c f3 ff ff       	call   100437 <printf>
-            shutdown();
-  1010bb:	e8 11 fc ff ff       	call   100cd1 <shutdown>
-  1010c0:	83 c4 10             	add    $0x10,%esp
-            syscall(tf);
-  1010c3:	83 ec 0c             	sub    $0xc,%esp
-  1010c6:	53                   	push   %ebx
-  1010c7:	e8 6f fc ff ff       	call   100d3b <syscall>
-            return;
-  1010cc:	83 c4 10             	add    $0x10,%esp
+  1010f9:	83 c4 10             	add    $0x10,%esp
+  1010fc:	eb 34                	jmp    101132 <trap_handler+0x6e>
+        page_not_found_handler(tf->err);
+  1010fe:	83 ec 0c             	sub    $0xc,%esp
+  101101:	ff 73 34             	push   0x34(%ebx)
+  101104:	e8 8a fb ff ff       	call   100c93 <page_not_found_handler>
+        return;
+  101109:	83 c4 10             	add    $0x10,%esp
+  10110c:	eb 24                	jmp    101132 <trap_handler+0x6e>
+        printf("General Protection Fault at EIP: 0x%x\n", tf->eip);
+  10110e:	83 ec 08             	sub    $0x8,%esp
+  101111:	ff 73 38             	push   0x38(%ebx)
+  101114:	68 94 21 10 00       	push   $0x102194
+  101119:	e8 19 f3 ff ff       	call   100437 <printf>
+        shutdown();
+  10111e:	e8 e8 fb ff ff       	call   100d0b <shutdown>
+  101123:	83 c4 10             	add    $0x10,%esp
+        syscall(tf);
+  101126:	83 ec 0c             	sub    $0xc,%esp
+  101129:	53                   	push   %ebx
+  10112a:	e8 5b fc ff ff       	call   100d8a <syscall>
+        return;
+  10112f:	83 c4 10             	add    $0x10,%esp
 }
-  1010cf:	8b 5d fc             	mov    -0x4(%ebp),%ebx
-  1010d2:	c9                   	leave
-  1010d3:	c3                   	ret
+  101132:	8b 5d fc             	mov    -0x4(%ebp),%ebx
+  101135:	c9                   	leave
+  101136:	c3                   	ret
 
-001010d4 <user_app_load>:
+00101137 <user_app_load>:
 
 int user_app_load(uint32 *info)
 {
-  1010d4:	55                   	push   %ebp
-  1010d5:	89 e5                	mov    %esp,%ebp
-  1010d7:	56                   	push   %esi
-  1010d8:	53                   	push   %ebx
-  1010d9:	8b 45 08             	mov    0x8(%ebp),%eax
+  101137:	55                   	push   %ebp
+  101138:	89 e5                	mov    %esp,%ebp
+  10113a:	57                   	push   %edi
+  10113b:	56                   	push   %esi
+  10113c:	53                   	push   %ebx
+  10113d:	83 ec 1c             	sub    $0x1c,%esp
+  101140:	8b 45 08             	mov    0x8(%ebp),%eax
     uint32 start = info[1];
-  1010dc:	8b 70 04             	mov    0x4(%eax),%esi
+  101143:	8b 50 04             	mov    0x4(%eax),%edx
+  101146:	89 55 e4             	mov    %edx,-0x1c(%ebp)
     uint32 end = info[2];
     uint32 length = end - start;
-  1010df:	8b 58 08             	mov    0x8(%eax),%ebx
-  1010e2:	29 f3                	sub    %esi,%ebx
+  101149:	8b 78 08             	mov    0x8(%eax),%edi
+  10114c:	29 d7                	sub    %edx,%edi
+
+    // 预分配用户程序的页面
+    for (uint32 addr = BASE_ADDRESS; addr < BASE_ADDRESS + length; addr += PAGE_SIZE)
+  10114e:	8d b7 00 00 80 00    	lea    0x800000(%edi),%esi
+  101154:	81 fe 00 00 80 00    	cmp    $0x800000,%esi
+  10115a:	76 1f                	jbe    10117b <user_app_load+0x44>
+  10115c:	bb 00 00 80 00       	mov    $0x800000,%ebx
+    {
+        alloc_page(addr, 1, 1); // 写权限，用户权限
+  101161:	83 ec 04             	sub    $0x4,%esp
+  101164:	6a 01                	push   $0x1
+  101166:	6a 01                	push   $0x1
+  101168:	53                   	push   %ebx
+  101169:	e8 4f fa ff ff       	call   100bbd <alloc_page>
+    for (uint32 addr = BASE_ADDRESS; addr < BASE_ADDRESS + length; addr += PAGE_SIZE)
+  10116e:	81 c3 00 10 00 00    	add    $0x1000,%ebx
+  101174:	83 c4 10             	add    $0x10,%esp
+  101177:	39 f3                	cmp    %esi,%ebx
+  101179:	72 e6                	jb     101161 <user_app_load+0x2a>
+    }
 
     memset((void *)BASE_ADDRESS, 0, length);
-  1010e4:	83 ec 04             	sub    $0x4,%esp
-  1010e7:	53                   	push   %ebx
-  1010e8:	6a 00                	push   $0x0
-  1010ea:	68 00 00 30 00       	push   $0x300000
-  1010ef:	e8 b6 f3 ff ff       	call   1004aa <memset>
+  10117b:	83 ec 04             	sub    $0x4,%esp
+  10117e:	57                   	push   %edi
+  10117f:	6a 00                	push   $0x0
+  101181:	68 00 00 80 00       	push   $0x800000
+  101186:	e8 1f f3 ff ff       	call   1004aa <memset>
     memmove((void *)BASE_ADDRESS, (void *)start, length);
-  1010f4:	83 c4 0c             	add    $0xc,%esp
-  1010f7:	53                   	push   %ebx
-  1010f8:	56                   	push   %esi
-  1010f9:	68 00 00 30 00       	push   $0x300000
-  1010fe:	e8 06 f4 ff ff       	call   100509 <memmove>
+  10118b:	83 c4 0c             	add    $0xc,%esp
+  10118e:	57                   	push   %edi
+  10118f:	ff 75 e4             	push   -0x1c(%ebp)
+  101192:	68 00 00 80 00       	push   $0x800000
+  101197:	e8 6d f3 ff ff       	call   100509 <memmove>
 
     return (int)length;
 }
-  101103:	89 d8                	mov    %ebx,%eax
-  101105:	8d 65 f8             	lea    -0x8(%ebp),%esp
-  101108:	5b                   	pop    %ebx
-  101109:	5e                   	pop    %esi
-  10110a:	5d                   	pop    %ebp
-  10110b:	c3                   	ret
+  10119c:	89 f8                	mov    %edi,%eax
+  10119e:	8d 65 f4             	lea    -0xc(%ebp),%esp
+  1011a1:	5b                   	pop    %ebx
+  1011a2:	5e                   	pop    %esi
+  1011a3:	5f                   	pop    %edi
+  1011a4:	5d                   	pop    %ebp
+  1011a5:	c3                   	ret
 
-0010110c <user_app_run>:
+001011a6 <user_app_run>:
 
 void user_app_run(void)
 {
-  10110c:	55                   	push   %ebp
-  10110d:	89 e5                	mov    %esp,%ebp
-  10110f:	83 ec 14             	sub    $0x14,%esp
+  1011a6:	55                   	push   %ebp
+  1011a7:	89 e5                	mov    %esp,%ebp
+  1011a9:	83 ec 14             	sub    $0x14,%esp
     user_app_load((uint32 *)_app_num);
-  101112:	68 00 30 10 00       	push   $0x103000
-  101117:	e8 b8 ff ff ff       	call   1010d4 <user_app_load>
+  1011ac:	68 00 30 10 00       	push   $0x103000
+  1011b1:	e8 81 ff ff ff       	call   101137 <user_app_load>
+
+    // 预分配用户栈页面
+    for (uint32 addr = USER_STACK_TOP - PAGE_SIZE; addr < USER_STACK_TOP; addr += PAGE_SIZE)
+    {
+        alloc_page(addr, 1, 1); // 写权限，用户权限
+  1011b6:	83 c4 0c             	add    $0xc,%esp
+  1011b9:	6a 01                	push   $0x1
+  1011bb:	6a 01                	push   $0x1
+  1011bd:	68 00 e0 7f 00       	push   $0x7fe000
+  1011c2:	e8 f6 f9 ff ff       	call   100bbd <alloc_page>
+    }
+
     tss_set((uint32_t)boot_stack_top);
-  10111c:	c7 04 24 00 40 11 00 	movl   $0x114000,(%esp)
-  101123:	e8 9b f7 ff ff       	call   1008c3 <tss_set>
-    user_enter(BASE_ADDRESS, (uint32_t)(user_stack_top + sizeof(user_stack_top)));
-  101128:	83 c4 08             	add    $0x8,%esp
-  10112b:	68 00 80 31 00       	push   $0x318000
-  101130:	68 00 00 30 00       	push   $0x300000
-  101135:	e8 24 f6 ff ff       	call   10075e <user_enter>
+  1011c7:	c7 04 24 00 40 11 00 	movl   $0x114000,(%esp)
+  1011ce:	e8 01 f7 ff ff       	call   1008d4 <tss_set>
+    user_enter(BASE_ADDRESS, USER_STACK_TOP);
+  1011d3:	83 c4 08             	add    $0x8,%esp
+  1011d6:	68 00 f0 7f 00       	push   $0x7ff000
+  1011db:	68 00 00 80 00       	push   $0x800000
+  1011e0:	e8 8a f5 ff ff       	call   10076f <user_enter>
 }
-  10113a:	83 c4 10             	add    $0x10,%esp
-  10113d:	c9                   	leave
-  10113e:	c3                   	ret
+  1011e5:	83 c4 10             	add    $0x10,%esp
+  1011e8:	c9                   	leave
+  1011e9:	c3                   	ret

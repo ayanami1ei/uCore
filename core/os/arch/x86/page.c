@@ -1,29 +1,34 @@
-#include"page.h"
+#include "page.h"
 #include "../../types.h"
-#include"../../string.h"
+#include "../../string.h"
 
 #define PAGE_SIZE 4096
 
 // 位操作函数
-static inline int get_bit(uint8_t *bitmap, int bit) {
+static inline int get_bit(uint8_t *bitmap, int bit)
+{
     return (bitmap[bit / 8] >> (bit % 8)) & 1;
 }
 
-static inline void set_bit(uint8_t *bitmap, int bit) {
+static inline void set_bit(uint8_t *bitmap, int bit)
+{
     bitmap[bit / 8] |= (1 << (bit % 8));
 }
 
-static inline void clear_bit(uint8_t *bitmap, int bit) {
+static inline void clear_bit(uint8_t *bitmap, int bit)
+{
     bitmap[bit / 8] &= ~(1 << (bit % 8));
 }
 
 __attribute__((aligned(4096))) struct PagedDirectoryEntry page_directory[1024];
 __attribute__((aligned(4096))) struct PageTableEntry page_table[512][1024]; // 512个页表，每个1024项
-uint8_t phys_bitmap[512]; // 每位表示一个物理页
+uint8_t phys_bitmap[512];                                                   // 每位表示一个物理页
 
-void page_init() {
+void page_init()
+{
     // 初始化页目录和页表
-    for (int i = 0; i < 1024; i++) {
+    for (int i = 0; i < 1024; i++)
+    {
         page_directory[i].present = 0;
         page_directory[i].rw = 1;
         page_directory[i].user = 0;
@@ -31,8 +36,10 @@ void page_init() {
         page_directory[i].table_addr = 0;
     }
 
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 1024; j++) {
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 1024; j++)
+        {
             page_table[i][j].present = 0;
             page_table[i][j].rw = 1;
             page_table[i][j].user = 0;
@@ -44,12 +51,14 @@ void page_init() {
     // 初始化物理页位图，所有页初始为可用（除了内核使用的）
     memset(phys_bitmap, 0, sizeof(phys_bitmap));
     // 标记内核使用的页为已用（假设内核使用前64页，256KB）
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 64; i++)
+    {
         set_bit(phys_bitmap, i);
     }
 
     // 映射前 4MB 内存
-    for (int i = 0; i < 1024; i++) {
+    for (int i = 0; i < 1024; i++)
+    {
         page_table[0][i].present = 1;
         page_table[0][i].rw = 1;
         page_table[0][i].user = 0;
@@ -63,7 +72,8 @@ void page_init() {
     page_directory[0].table_addr = ((uint32_t)page_table[0]) >> 12;
 
     // 映射直接映射区域 0xC0000000 到物理 0 (前 4MB)
-    for (int i = 0; i < 1024; i++) {
+    for (int i = 0; i < 1024; i++)
+    {
         page_table[1][i].present = 1;
         page_table[1][i].rw = 1;
         page_table[1][i].user = 0;
@@ -82,7 +92,7 @@ void page_init() {
     page_directory[2].user = 1;
     page_directory[2].table_addr = ((uint32_t)page_table[2]) >> 12;
 
-    //内核页表，0-1MB
+    // 内核页表，0-1MB
 
     // 加载页目录地址到 CR3 寄存器
     asm volatile("mov %0, %%cr3" : : "r"(&page_directory));
@@ -94,61 +104,70 @@ void page_init() {
     asm volatile("mov %0, %%cr0" : : "r"(cr0));
 }
 
-uint32_t alloc_phys_page() {
-    for (int i = 0; i < 4096; i++) {
-        if (!get_bit(phys_bitmap, i)) { // 页空闲
-            set_bit(phys_bitmap, i);   // 标记为已用
-            return i * PAGE_SIZE;      // 返回物理地址
+uint32_t alloc_phys_page()
+{
+    for (int i = 0; i < 4096; i++)
+    {
+        if (!get_bit(phys_bitmap, i))
+        {                            // 页空闲
+            set_bit(phys_bitmap, i); // 标记为已用
+            return i * PAGE_SIZE;    // 返回物理地址
         }
     }
     return 0; // 没有空闲页
 }
 
-void free_phys_page(uint32_t addr) {
+void free_phys_page(uint32_t addr)
+{
     int index = addr / PAGE_SIZE;
     clear_bit(phys_bitmap, index);
 }
 
-void alloc_page(uint32_t fault_addr, bool is_write, bool is_user) {
-    uint32_t dir_idx   = (fault_addr >> 22) & 0x3FF; // 高 10 位
+void alloc_page(uint32_t fault_addr, bool is_write, bool is_user)
+{
+    uint32_t dir_idx = (fault_addr >> 22) & 0x3FF;   // 高 10 位
     uint32_t table_idx = (fault_addr >> 12) & 0x3FF; // 中间 10 位
 
     struct PagedDirectoryEntry *pde = &page_directory[dir_idx];
 
-    if (!pde->present) {
+    if (!pde->present)
+    {
         // 设置PDE指向对应的页表
         pde->table_addr = ((uint32_t)page_table[dir_idx]) >> 12;
-        pde->present    = 1;
-        pde->rw         = 1;
-        pde->user       = 1;
+        pde->present = 1;
+        pde->rw = 1;
+        pde->user = 1;
     }
 
     struct PageTableEntry *pte = &page_table[dir_idx][table_idx];
-    uint32_t phys_page = alloc_phys_page();  // 新分配一个 4 KB 物理页
-    
+    uint32_t phys_page = alloc_phys_page(); // 新分配一个 4 KB 物理页
+
     // 通过直接映射区域清零物理页
-    //uint32_t virt_addr = 0xC0000000 + phys_page;  // 直接映射虚拟地址
-    //memset((void*)virt_addr, 0, PAGE_SIZE);
+    uint32_t virt_addr = 0xC0000000 + phys_page; // 直接映射虚拟地址
+    memset((void *)virt_addr, 0, PAGE_SIZE);
 
     pte->frame_addr = phys_page >> 12;
-    pte->present    = 1;
-    pte->rw         = is_write ? 1 : 0;
-    pte->user       = is_user ? 1 : 0;
+    pte->present = 1;
+    pte->rw = is_write ? 1 : 0;
+    pte->user = is_user ? 1 : 0;
+
+    // Invalidate TLB entry for the fault address
+    __asm__ __volatile__("invlpg (%0)" : : "r"(fault_addr));
 }
 
-int r_cr2(){
+int r_cr2()
+{
     uint32_t val;
     asm volatile("mov %%cr2, %0" : "=r"(val));
     return val;
 }
 
-void page_not_found_handler(uint32_t err) {
+void page_not_found_handler(uint32_t err)
+{
     uint32_t fault_addr = r_cr2();
     uint32_t err_code = err;
     bool is_write = err_code & (1 << 1);
-    bool is_user  = err_code & (1 << 2);
+    bool is_user = err_code & (1 << 2);
 
     alloc_page(fault_addr, is_write, is_user);
 }
-
-

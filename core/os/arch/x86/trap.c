@@ -5,7 +5,11 @@
 #include "syscall.h"
 #include "../../sbi.h"
 #include "gdt.h"
-#include"page.h"   
+#include "page.h"
+
+#define PAGE_SIZE 4096
+
+extern void alloc_page(uint32_t fault_addr, bool is_write, bool is_user);
 
 extern void user_load(struct trapframe *tf);
 extern char boot_stack_top[];
@@ -45,6 +49,8 @@ extern void trap_entry_31(void);
 extern void syscall(struct trapframe *tf);
 extern void user_enter(uint32 entry, uint32 user_stack);
 extern char _app_num[];
+
+#define USER_STACK_TOP (BASE_ADDRESS - 0x1000)
 
 __attribute__((aligned(4096))) char trap_page[0x1000];
 __attribute__((aligned(4096))) char user_stack_top[0x1000];
@@ -102,19 +108,19 @@ void trap_handler(struct trapframe *tf)
     if (!tf)
         return;
 
-    switch(tf->trapno)
+    switch (tf->trapno)
     {
-        case 14: // Page Fault
-            page_not_found_handler(tf->err);
-            return;
-        case 13:
-            printf("General Protection Fault at EIP: 0x%x\n", tf->eip);
-            shutdown();
-        case 0x80: // Syscall
-            syscall(tf);
-            return;
-        default:
-            break;
+    case 14: // Page Fault
+        page_not_found_handler(tf->err);
+        return;
+    case 13:
+        printf("General Protection Fault at EIP: 0x%x\n", tf->eip);
+        shutdown();
+    case 0x80: // Syscall
+        syscall(tf);
+        return;
+    default:
+        break;
     }
 
     printf("CPU Exception %d occurred!\n", tf->trapno);
@@ -129,6 +135,12 @@ int user_app_load(uint32 *info)
     uint32 end = info[2];
     uint32 length = end - start;
 
+    // 预分配用户程序的页面
+    for (uint32 addr = BASE_ADDRESS; addr < BASE_ADDRESS + length; addr += PAGE_SIZE)
+    {
+        alloc_page(addr, 1, 1); // 写权限，用户权限
+    }
+
     memset((void *)BASE_ADDRESS, 0, length);
     memmove((void *)BASE_ADDRESS, (void *)start, length);
 
@@ -138,6 +150,13 @@ int user_app_load(uint32 *info)
 void user_app_run(void)
 {
     user_app_load((uint32 *)_app_num);
+
+    // 预分配用户栈页面
+    for (uint32 addr = USER_STACK_TOP - PAGE_SIZE; addr < USER_STACK_TOP; addr += PAGE_SIZE)
+    {
+        alloc_page(addr, 1, 1); // 写权限，用户权限
+    }
+
     tss_set((uint32_t)boot_stack_top);
-    user_enter(BASE_ADDRESS, (uint32_t)(user_stack_top + sizeof(user_stack_top)));
+    user_enter(BASE_ADDRESS, USER_STACK_TOP);
 }

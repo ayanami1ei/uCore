@@ -1,9 +1,11 @@
 #include "syscall.h"
 #include "trap.h"
 #include "sbi.h"
-#include "../riscv/syscall_ids.h"
+#include "syscall_ids.h"
 #include "../../types.h"
 #include "../../console.h"
+
+static uint32 heap_end = 0x900000; // 初始堆顶，假设在用户空间
 
 uint32 sys_write(int fd, const char *str, uint32 len)
 {
@@ -19,6 +21,14 @@ __attribute__((noreturn)) void sys_exit(int code)
 {
     shutdown();
     __builtin_unreachable();
+}
+
+uint32 sys_sbrk(int increment)
+{
+    uint32 old_heap = heap_end;
+    heap_end += increment;
+    // 这里可以添加页面分配逻辑，如果需要
+    return old_heap;
 }
 
 void syscall(struct trapframe *tf)
@@ -43,6 +53,9 @@ void syscall(struct trapframe *tf)
         break;
     case SYS_exit:
         sys_exit(args[0]);
+        break;
+    case SYS_sbrk:
+        ret = sys_sbrk(args[0]);
         break;
     default:
         printf("unknown interrupt or exception");
